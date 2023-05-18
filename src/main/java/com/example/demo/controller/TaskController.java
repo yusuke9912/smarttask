@@ -28,16 +28,16 @@ public class TaskController {
 		return "tasks";
 	}
 
-	@GetMapping("/items/add")
+	@GetMapping("/tasks/add")
 	public String create(Model model) {
 		List<Task> taskList = taskRepository.findAll();
 
-		model.addAttribute("categories", taskList);
+		model.addAttribute("tasks", taskList);
 
 		return "addTask";
 	}
 
-	@PostMapping("/items/add")
+	@PostMapping("/tasks/add")
 	public String store(
 			@RequestParam(name = "personId", defaultValue = "") Integer personId,
 			@RequestParam(name = "title", defaultValue = "") String title,
@@ -79,12 +79,22 @@ public class TaskController {
 
 		return "redirect:/tasks";
 	}
-	//
-	//	@PostMapping("/items/{id}/delete")
-	//	public String delete(@PathVariable("id") Integer id, Model model) {
-	//
-	//		itemRepository.deleteById(id);
-	//
-	//		return "redirect:/items";
-	//	}
+
+	@PostMapping("/tasks/{id}/delete")
+	public String delete(@PathVariable("id") Integer id, Model model) {
+
+		taskRepository.deleteById(id);
+
+		return "redirect:/tasks";
+	}
+	
+	@PostMapping("/tasks/{id}/complete")
+	public String complete(@PathVariable("id") Integer id, Model model) {
+
+		Task task1 = taskRepository.findById(id).get();
+		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), true, task1.getImportant(), task1.getContent(), task1.getDueDate(), task1.getCreatedDate());
+		taskRepository.save(task2);
+
+		return "redirect:/tasks";
+	}
 }

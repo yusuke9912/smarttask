@@ -4,36 +4,44 @@
 <head>
 	<meta charset="UTF-8">
 	<title>タイトルを入力</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-<h1>商品登録</h1>
+	<h1>タスク更新</h1>
 
-<form action="/admin/items/add" method="post">
-	<table border="1">
-		<tr>
-			<th>カテゴリーID</th>
-			<td>
-				<select name="categoryId">
-					<option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}">
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<th>商品名</th>
-			<td>
-				<input type="text" name="name">
-			</td>
-		</tr>
-		<tr>
-			<th>値段</th>
-			<td>
-				<input type="text" name="price">
-			</td>
-		</tr>
-	</table>
-	<button>登録</button>
-</form>
+	<form th:action="'/tasks/add'" method="post">
+		<input type="hidden" name="personId" value="1">
+		<input type="hidden" name="isCompleted" value="false">
+		<input type="hidden" name="createdDate" value="2023/01/01">
+		<table border="1">
+			<tr>
+				<th>タスク名</th>
+				<td>
+					<input type="text" name="title">
+				</td>
+			</tr>
+			<tr>
+				<th>内容</th>
+				<td>
+					<input type="text" name="content">
+				</td>
+			</tr>
+			<tr>
+				<th>重要度</th>
+				<td>
+					<input type="text" name="important">
+				</td>
+			</tr>
+			<tr>
+				<th>期限日</th>
+				<td>
+					<input type="text" name="dueDate">
+				</td>
+			</tr>
+		</table>
+		<button>更新</button>
+	</form>
 </body>
 
 </html>

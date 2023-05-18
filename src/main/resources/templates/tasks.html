@@ -20,16 +20,29 @@
 				<th>重要度</th>
 				<th>作成日</th>
 				<th>期限日</th>
+				<th></th>
 			</tr>
 			<tr th:each="task: ${tasks}">
-				<td><input type="checkbox"></td>
+				<th:block th:if="${task.isCompleted == false}">
+				<td>
+					<form th:action="'/tasks/' + ${task.id} + '/complete'" method="post">
+						<button style="background:blue; color:white">完了</button>
+					</form>
+				</td>
 				<td><a th:href="'/tasks/'+${task.id} + '/edit'">[[${task.title}]]</a></td>
 				<td>[[${task.content}]]</td>
 				<td>[[${task.important}]]</td>
 				<td>[[${task.createdDate}]]</td>
 				<td>[[${task.dueDate}]]</td>
+				<td>
+					<form th:action="'/tasks/' + ${task.id} + '/delete'" method="post">
+						<button style="background:red; color:white">削除</button>
+					</form>
+				</td>
+				</th:block>
 			</tr>
 		</table>
+		<a href="/tasks/add">新規作成</a>
 	</main>
 
 	<hr>
