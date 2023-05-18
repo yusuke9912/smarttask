@@ -45,10 +45,9 @@ public class TaskController {
 			@RequestParam(name = "content", defaultValue = "") String content,
 			@RequestParam(name = "important", defaultValue = "") Integer important,
 			@RequestParam(name = "dueDate", defaultValue = "") String dueDate,
-			@RequestParam(name = "createdDate", defaultValue = "") String createdDate,
 			Model model) {
 
-		Task task = new Task(personId, title, isCompleted, important, content, dueDate, createdDate);
+		Task task = new Task(personId, title, isCompleted, important, content, dueDate);
 		taskRepository.save(task);
 
 		return "redirect:/tasks";

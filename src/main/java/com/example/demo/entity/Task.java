@@ -47,20 +47,20 @@ public class Task {
 		this.isCompleted = isCompleted;
 		this.important = important;
 		this.content = content;
-		this.dueDate = LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-		this.createdDate = LocalDate.parse(createdDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		this.dueDate = LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		this.createdDate = LocalDate.parse(createdDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
 
 	// 新規作成用
-	public Task(Integer personId, String title, Boolean isCompleted, Integer important, String content, String dueDate,
-			String createdDate) {
+	public Task(Integer personId, String title, Boolean isCompleted, Integer important, String content,
+			String dueDate) {
 		this.personId = personId;
 		this.title = title;
 		this.isCompleted = isCompleted;
 		this.important = important;
 		this.content = content;
-		this.dueDate = LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-		this.createdDate = LocalDate.parse(createdDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		this.dueDate = LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		this.createdDate = LocalDate.now();
 	}
 
 	public Integer getId() {
@@ -88,10 +88,11 @@ public class Task {
 	}
 
 	public String getDueDate() {
-		return dueDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		return dueDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
 
 	public String getCreatedDate() {
-		return createdDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		return createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
+
 }
