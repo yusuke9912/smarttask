@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>タイトルを入力</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<header th:replace="header"></header>
+	<hr>
+
+	<main>
+		<table border="1">
+			<tr>
+				<th></th>
+				<th>タスク名</th>
+				<th>内容</th>
+				<th>重要度</th>
+				<th>作成日</th>
+				<th>期限日</th>
+			</tr>
+			<tr th:each="task: ${tasks}">
+				<td><input type="checkbox"></td>
+				<td><a th:href="'/tasks/'+${task.id} + '/edit'">[[${task.title}]]</a></td>
+				<td>[[${task.content}]]</td>
+				<td>[[${task.important}]]</td>
+				<td>[[${task.createdDate}]]</td>
+				<td>[[${task.dueDate}]]</td>
+			</tr>
+		</table>
+	</main>
+
+	<hr>
+	<footer th:replace="footer"></footer>
+</body>
+
+</html>
