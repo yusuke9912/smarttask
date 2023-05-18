@@ -67,6 +67,7 @@ public class AccountController {
 
 		// セッション管理されたアカウント情報に名前をセット
 		account.setName(person.getName());
+		account.setPersonId(person.getId());
 
 		// 「/items」へのリダイレクト
 		return "redirect:/tasks";

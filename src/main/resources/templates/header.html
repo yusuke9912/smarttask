@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-	<meta charset="UTF-8">
-	<title>タイトルを入力</title>
-</head>
-
-<body>
-	<header>
-		<h1><a href="/tasks">TODOアプリ</a></h1>
-		<span>[[${@account.name}]]さんがログイン中</span>
-		<a href="/logout">ログアウト</a>
-	</header>
-</body>
-
-</html>
+<header class="py-3 mb-4 border-bottom bg-primary">
+	<div class="container d-flex flex-wrap justify-content-center">
+		<a href="/tasks"
+			class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+			<span class="fs-4 text-white">TODOアプリ</span>
+		</a>
+		<a class="btn btn-outline-light" href="/logout">ログアウト</a>
+	</div>
+</header>

@@ -7,6 +7,7 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope
 public class Account {
 	private String name;
+	private Integer personId;
 
 	public Account() {
 	}
@@ -18,8 +19,16 @@ public class Account {
 	public String getName() {
 		return name;
 	}
+	
+	public Integer getPersonId() {
+		return personId;
+	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
 	}
 }
