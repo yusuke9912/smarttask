@@ -26,7 +26,6 @@
 					<th>内容</th>
 					<th>重要度</th>
 					<th>期限日</th>
-					<th>作成日</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -41,7 +40,6 @@
 						<td>[[${task.content}]]</td>
 						<td>[[${task.important}]]</td>
 						<td>[[${task.dueDate}]]</td>
-						<td>[[${task.createdDate}]]</td>
 						<td>
 							<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn btn-secondary">更新</a>
 						</td>
