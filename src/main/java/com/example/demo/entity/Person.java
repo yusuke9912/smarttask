@@ -22,8 +22,16 @@ public class Person {
 	// コンストラクタ
 	public Person() {
 	}
-
+	//登録用
 	public Person(String name, String email,String password) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+	
+	//更新用
+	public Person(Integer id, String name, String email,String password) {
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
