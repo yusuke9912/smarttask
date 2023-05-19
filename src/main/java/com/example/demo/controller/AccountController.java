@@ -28,7 +28,7 @@ public class AccountController {
 	PersonRepository personRepository;
 
 	// ログイン画面を表示
-	@GetMapping({ "/login", "/logout" })
+	@GetMapping({ "/", "/login", "/logout" })
 	public String index() {
 		// セッション情報を全てクリアする
 		session.invalidate();

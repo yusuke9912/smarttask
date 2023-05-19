@@ -21,7 +21,7 @@ public class TaskController {
 	@GetMapping("/tasks")
 	public String tasks(Model model) {
 
-		List<Task> taskList = taskRepository.findAll();
+		List<Task> taskList = taskRepository.findAllByOrderByCreatedDate();
 
 		model.addAttribute("tasks", taskList);
 
