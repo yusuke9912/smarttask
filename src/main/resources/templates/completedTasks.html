@@ -16,15 +16,15 @@
 			<div class="container d-flex flex-wrap justify-content-center mb-4">
 				<h4 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
 					タスク一覧</h4>
-				<a class="btn btn-danger" href="/tasks/add"><i class="bi bi-plus-lg"></i> 新規作成</a>
+				<a class="btn btn-danger" href="/tasks/add">新規作成</a>
 			</div>
 
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a href="/tasks" class="nav-link active" data-bs-toggle="tab">未完了</a>
+					<a href="/tasks" class="nav-link" data-bs-toggle="tab">未完了</a>
 				</li>
 				<li class="nav-item">
-					<a href="/tasks/completed" class="nav-link" data-bs-toggle="tab">完了済み</a>
+					<a href="/tasks/completed" class="nav-link active" data-bs-toggle="tab">完了済み</a>
 				</li>
 			</ul>
 			<table class="table">
@@ -38,32 +38,23 @@
 					<th></th>
 				</tr>
 				<tr th:each="task: ${tasks}">
-					<th:block th:if="${task.isCompleted == false && task.personId == @account.personId}">
+					<th:block th:if="${task.isCompleted == true && task.personId == @account.personId}">
 						<td>
-							<form th:action="'/tasks/' + ${task.id} + '/complete'" method="post">
-								<button class="btn btn-primary">
-									完了
-								</button>
+							<form th:action="'/tasks/' + ${task.id} + '/incomplete'" method="post">
+								<button class="btn btn-primary">未完了に戻す</button>
 							</form>
 						</td>
 						<td>[[${task.title}]]</td>
 						<td>[[${task.content}]]</td>
 						<td>
-							<th:block th:each="i : ${#numbers.sequence(1,task.important)}">
-								★
+							<th:block th:each="i : ${#numbers.sequence(0,task.important)}">
+								<i class="bi bi-star"></i>
 							</th:block>
 						</td>
 						<td>[[${task.dueDate}]]</td>
 						<td>
-							<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn btn-secondary">
-								<i class="bi bi-pencil"></i>
-							</a>
-						</td>
-						<td>
 							<form th:action="'/tasks/' + ${task.id} + '/delete'" method="post">
-								<button class="btn btn-secondary">
-									<i class="bi bi-trash"></i>
-								</button>
+								<button class="btn btn-secondary"><i class="bi bi-trash"></i></button>
 							</form>
 						</td>
 					</th:block>

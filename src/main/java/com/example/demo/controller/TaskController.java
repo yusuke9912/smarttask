@@ -27,6 +27,16 @@ public class TaskController {
 
 		return "tasks";
 	}
+	
+	@GetMapping("/tasks/completed")
+	public String completedTasks(Model model) {
+
+		List<Task> taskList = taskRepository.findAllByOrderByCreatedDate();
+
+		model.addAttribute("tasks", taskList);
+
+		return "completedTasks";
+	}
 
 	@GetMapping("/tasks/add")
 	public String create(Model model) {
@@ -95,5 +105,15 @@ public class TaskController {
 		taskRepository.save(task2);
 
 		return "redirect:/tasks";
+	}
+	
+	@PostMapping("/tasks/{id}/incomplete")
+	public String incomplete(@PathVariable("id") Integer id, Model model) {
+
+		Task task1 = taskRepository.findById(id).get();
+		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), false, task1.getImportant(), task1.getContent(), task1.getDueDate(), task1.getCreatedDate());
+		taskRepository.save(task2);
+
+		return "redirect:/tasks/completed";
 	}
 }
