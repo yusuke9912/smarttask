@@ -146,12 +146,7 @@ public class TaskController {
 
 	@PostMapping("/tasks/{id}/complete")
 	public String complete(@PathVariable("id") Integer id, Model model) {
-		Task task = taskRepository.findById(id).get();
-
-		Task task1 = taskRepository.findById(id).get();
-		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), true, task1.getImportant(),
-				task1.getContent(), task1.getDueDatetime(), task1.getCreatedDatetime());
-		taskRepository.save(task2);
+		taskRepository.setIsCompleted(id, true);
 
 		return "redirect:/tasks";
 	}
@@ -159,10 +154,7 @@ public class TaskController {
 	@PostMapping("/tasks/{id}/incomplete")
 	public String incomplete(@PathVariable("id") Integer id, Model model) {
 
-		Task task1 = taskRepository.findById(id).get();
-		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), false, task1.getImportant(),
-				task1.getContent(), task1.getDueDatetime(), task1.getCreatedDatetime());
-		taskRepository.save(task2);
+		taskRepository.setIsCompleted(id, false);
 
 		return "redirect:/tasks/completed";
 	}
