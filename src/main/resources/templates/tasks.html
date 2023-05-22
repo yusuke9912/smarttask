@@ -30,10 +30,59 @@
 			<table class="table">
 				<tr>
 					<th></th>
-					<th>タスク</th>
-					<th>内容</th>
-					<th>重要度</th>
-					<th>期限日</th>
+					<th class="p-0"
+						th:classappend="${sort.equals('titleAsc') || sort.equals('titleDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('titleAsc') && !sort.equals('titleDesc')}">
+							<a href="/tasks?sort=titleAsc" class="link-dark d-block h-100 p-2">タスク</a>
+						</th:block>
+						<th:block th:if="${sort.equals('titleAsc')}">
+							<a href="/tasks?sort=titleDesc" class="link-dark d-block h-100 p-2">タスク <i
+									class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('titleDesc')}">
+							<a href="/tasks" class="link-dark d-block h-100 p-2">タスク <i
+									class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0"
+						th:classappend="${sort.equals('contentAsc') || sort.equals('contentDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('contentAsc') && !sort.equals('contentDesc')}">
+							<a href="/tasks?sort=contentAsc" class="link-dark d-block h-100 p-2">内容</a>
+						</th:block>
+						<th:block th:if="${sort.equals('contentAsc')}">
+							<a href="/tasks?sort=contentDesc" class="link-dark d-block h-100 p-2">内容 <i
+									class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('contentDesc')}">
+							<a href="/tasks" class="link-dark d-block h-100 p-2">内容 <i class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0"
+						th:classappend="${sort.equals('importantAsc') || sort.equals('importantDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('importantAsc') && !sort.equals('importantDesc')}">
+							<a href="/tasks?sort=importantAsc" class="link-dark d-block h-100 p-2">重要度</a>
+						</th:block>
+						<th:block th:if="${sort.equals('importantAsc')}">
+							<a href="/tasks?sort=importantDesc" class="link-dark d-block h-100 p-2">重要度 <i
+									class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('importantDesc')}">
+							<a href="/tasks" class="link-dark d-block h-100 p-2">重要度 <i class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0"
+						th:classappend="${sort.equals('dueDatetimeAsc') || sort.equals('dueDatetimeDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('dueDatetimeAsc') && !sort.equals('dueDatetimeDesc')}">
+							<a href="/tasks?sort=dueDatetimeAsc" class="link-dark d-block h-100 p-2">期限</a>
+						</th:block>
+						<th:block th:if="${sort.equals('dueDatetimeAsc')}">
+							<a href="/tasks?sort=dueDatetimeDesc" class="link-dark d-block h-100 p-2">期限 <i
+									class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('dueDatetimeDesc')}">
+							<a href="/tasks" class="link-dark d-block h-100 p-2">期限 <i class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
 					<th></th>
 					<th></th>
 				</tr>

@@ -8,8 +8,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.entity.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
-	List<Task> findAllByOrderByCreatedDatetime();
+	// ASC
+	List<Task> findAllByOrderByCreatedDatetimeAsc();
+	List<Task> findAllByOrderByTitleAsc();
+	List<Task> findAllByOrderByContentAsc();
+	List<Task> findAllByOrderByImportantAsc();
+	List<Task> findAllByOrderByDueDatetimeAsc();
+	
+	// DESC
+	List<Task> findAllByOrderByCreatedDatetimeDesc();
+	List<Task> findAllByOrderByTitleDesc();
+	List<Task> findAllByOrderByContentDesc();
+	List<Task> findAllByOrderByImportantDesc();
+	List<Task> findAllByOrderByDueDatetimeDesc();
 
 	@Transactional
 	void deleteByPersonId(Integer personId);
+
 }

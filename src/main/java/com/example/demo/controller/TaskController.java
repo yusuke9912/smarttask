@@ -18,23 +18,69 @@ import com.example.demo.repository.TaskRepository;
 public class TaskController {
 	@Autowired
 	TaskRepository taskRepository;
-
+	
 	@GetMapping("/tasks")
-	public String tasks(Model model) {
+	public String tasks(
+			@RequestParam(name = "sort", defaultValue = "") String sort,
+			Model model) {
 
-		List<Task> taskList = taskRepository.findAllByOrderByCreatedDatetime();
+		List<Task> taskList = null;
+
+		if (sort.isEmpty()) {
+			taskList = taskRepository.findAllByOrderByCreatedDatetimeAsc();
+		} else if (sort.equals("titleAsc")) {
+			taskList = taskRepository.findAllByOrderByTitleAsc();
+		} else if (sort.equals("contentAsc")) {
+			taskList = taskRepository.findAllByOrderByContentAsc();
+		} else if (sort.equals("importantAsc")) {
+			taskList = taskRepository.findAllByOrderByImportantAsc();
+		} else if (sort.equals("dueDatetimeAsc")) {
+			taskList = taskRepository.findAllByOrderByDueDatetimeAsc();
+		} else if (sort.equals("titleDesc")) {
+			taskList = taskRepository.findAllByOrderByTitleDesc();
+		} else if (sort.equals("contentDesc")) {
+			taskList = taskRepository.findAllByOrderByContentDesc();
+		} else if (sort.equals("importantDesc")) {
+			taskList = taskRepository.findAllByOrderByImportantDesc();
+		} else if (sort.equals("dueDatetimeDesc")) {
+			taskList = taskRepository.findAllByOrderByDueDatetimeDesc();
+		}
 
 		model.addAttribute("tasks", taskList);
+		model.addAttribute("sort", sort);
 
 		return "tasks";
 	}
-	
-	@GetMapping("/tasks/completed")
-	public String completedTasks(Model model) {
 
-		List<Task> taskList = taskRepository.findAllByOrderByCreatedDatetime();
+	@GetMapping("/tasks/completed")
+	public String completedTasks(
+			@RequestParam(name = "sort", defaultValue = "") String sort,
+			Model model) {
+
+		List<Task> taskList = null;
+
+		if (sort.isEmpty()) {
+			taskList = taskRepository.findAllByOrderByCreatedDatetimeAsc();
+		} else if (sort.equals("titleAsc")) {
+			taskList = taskRepository.findAllByOrderByTitleAsc();
+		} else if (sort.equals("contentAsc")) {
+			taskList = taskRepository.findAllByOrderByContentAsc();
+		} else if (sort.equals("importantAsc")) {
+			taskList = taskRepository.findAllByOrderByImportantAsc();
+		} else if (sort.equals("dueDatetimeAsc")) {
+			taskList = taskRepository.findAllByOrderByDueDatetimeAsc();
+		} else if (sort.equals("titleDesc")) {
+			taskList = taskRepository.findAllByOrderByTitleDesc();
+		} else if (sort.equals("contentDesc")) {
+			taskList = taskRepository.findAllByOrderByContentDesc();
+		} else if (sort.equals("importantDesc")) {
+			taskList = taskRepository.findAllByOrderByImportantDesc();
+		} else if (sort.equals("dueDatetimeDesc")) {
+			taskList = taskRepository.findAllByOrderByDueDatetimeDesc();
+		}
 
 		model.addAttribute("tasks", taskList);
+		model.addAttribute("sort", sort);
 
 		return "completedTasks";
 	}
@@ -44,7 +90,7 @@ public class TaskController {
 		List<Task> taskList = taskRepository.findAll();
 
 		model.addAttribute("tasks", taskList);
-
+		
 		return "addTask";
 	}
 
@@ -97,22 +143,25 @@ public class TaskController {
 
 		return "redirect:/tasks";
 	}
-	
+
 	@PostMapping("/tasks/{id}/complete")
 	public String complete(@PathVariable("id") Integer id, Model model) {
+		Task task = taskRepository.findById(id).get();
 
 		Task task1 = taskRepository.findById(id).get();
-		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), true, task1.getImportant(), task1.getContent(), task1.getDueDatetime(), task1.getCreatedDatetime());
+		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), true, task1.getImportant(),
+				task1.getContent(), task1.getDueDatetime(), task1.getCreatedDatetime());
 		taskRepository.save(task2);
 
 		return "redirect:/tasks";
 	}
-	
+
 	@PostMapping("/tasks/{id}/incomplete")
 	public String incomplete(@PathVariable("id") Integer id, Model model) {
 
 		Task task1 = taskRepository.findById(id).get();
-		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), false, task1.getImportant(), task1.getContent(), task1.getDueDatetime(), task1.getCreatedDatetime());
+		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), false, task1.getImportant(),
+				task1.getContent(), task1.getDueDatetime(), task1.getCreatedDatetime());
 		taskRepository.save(task2);
 
 		return "redirect:/tasks/completed";
