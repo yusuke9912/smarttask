@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class TaskController {
 	@GetMapping("/tasks")
 	public String tasks(Model model) {
 
-		List<Task> taskList = taskRepository.findAllByOrderByCreatedDate();
+		List<Task> taskList = taskRepository.findAllByOrderByCreatedDatetime();
 
 		model.addAttribute("tasks", taskList);
 
@@ -31,7 +32,7 @@ public class TaskController {
 	@GetMapping("/tasks/completed")
 	public String completedTasks(Model model) {
 
-		List<Task> taskList = taskRepository.findAllByOrderByCreatedDate();
+		List<Task> taskList = taskRepository.findAllByOrderByCreatedDatetime();
 
 		model.addAttribute("tasks", taskList);
 
@@ -54,10 +55,10 @@ public class TaskController {
 			@RequestParam(name = "isCompleted", defaultValue = "") Boolean isCompleted,
 			@RequestParam(name = "content", defaultValue = "") String content,
 			@RequestParam(name = "important", defaultValue = "") Integer important,
-			@RequestParam(name = "dueDate", defaultValue = "") String dueDate,
+			@RequestParam(name = "dueDatetime", defaultValue = "") LocalDateTime dueDatetime,
 			Model model) {
 
-		Task task = new Task(personId, title, isCompleted, important, content, dueDate);
+		Task task = new Task(personId, title, isCompleted, important, content, dueDatetime);
 		taskRepository.save(task);
 
 		return "redirect:/tasks";
@@ -79,11 +80,11 @@ public class TaskController {
 			@RequestParam(name = "isCompleted", defaultValue = "") Boolean isCompleted,
 			@RequestParam(name = "content", defaultValue = "") String content,
 			@RequestParam(name = "important", defaultValue = "") Integer important,
-			@RequestParam(name = "dueDate", defaultValue = "") String dueDate,
-			@RequestParam(name = "createdDate", defaultValue = "") String createdDate,
+			@RequestParam(name = "dueDatetime", defaultValue = "") LocalDateTime dueDatetime,
+			@RequestParam(name = "createdDatetime", defaultValue = "") LocalDateTime createdDatetime,
 			Model model) {
 
-		Task task = new Task(id, personId, title, isCompleted, important, content, dueDate, createdDate);
+		Task task = new Task(id, personId, title, isCompleted, important, content, dueDatetime, createdDatetime);
 		taskRepository.save(task);
 
 		return "redirect:/tasks";
@@ -101,7 +102,7 @@ public class TaskController {
 	public String complete(@PathVariable("id") Integer id, Model model) {
 
 		Task task1 = taskRepository.findById(id).get();
-		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), true, task1.getImportant(), task1.getContent(), task1.getDueDate(), task1.getCreatedDate());
+		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), true, task1.getImportant(), task1.getContent(), task1.getDueDatetime(), task1.getCreatedDatetime());
 		taskRepository.save(task2);
 
 		return "redirect:/tasks";
@@ -111,7 +112,7 @@ public class TaskController {
 	public String incomplete(@PathVariable("id") Integer id, Model model) {
 
 		Task task1 = taskRepository.findById(id).get();
-		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), false, task1.getImportant(), task1.getContent(), task1.getDueDate(), task1.getCreatedDate());
+		Task task2 = new Task(task1.getId(), task1.getPersonId(), task1.getTitle(), false, task1.getImportant(), task1.getContent(), task1.getDueDatetime(), task1.getCreatedDatetime());
 		taskRepository.save(task2);
 
 		return "redirect:/tasks/completed";

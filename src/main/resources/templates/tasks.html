@@ -53,7 +53,7 @@
 								★
 							</th:block>
 						</td>
-						<td>[[${task.dueDate}]]</td>
+						<td>[[${task.getDueDatetimeFormatted()}]]</td>
 						<td>
 							<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn btn-secondary">
 								<i class="bi bi-pencil"></i>

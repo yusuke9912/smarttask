@@ -48,10 +48,10 @@
 						<td>[[${task.content}]]</td>
 						<td>
 							<th:block th:each="i : ${#numbers.sequence(0,task.important)}">
-								<i class="bi bi-star"></i>
+								★
 							</th:block>
 						</td>
-						<td>[[${task.dueDate}]]</td>
+						<td>[[${task.dueDatetime}]]</td>
 						<td>
 							<form th:action="'/tasks/' + ${task.id} + '/delete'" method="post">
 								<button class="btn btn-secondary"><i class="bi bi-trash"></i></button>

@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.Column;
@@ -29,38 +29,39 @@ public class Task {
 
 	private String content;
 
-	@Column(name = "due_date")
-	private LocalDate dueDate;
+	@Column(name = "due_datetime")
+	private LocalDateTime dueDatetime;
 
-	@Column(name = "created_date")
-	private LocalDate createdDate;
+	@Column(name = "created_datetime")
+	
+	private LocalDateTime createdDatetime;
 
 	public Task() {
 	}
 
 	// 更新用
 	public Task(Integer id, Integer personId, String title, Boolean isCompleted, Integer important, String content,
-			String dueDate, String createdDate) {
+			LocalDateTime dueDatetime, LocalDateTime createdDatetime) {
 		this.id = id;
 		this.personId = personId;
 		this.title = title;
 		this.isCompleted = isCompleted;
 		this.important = important;
 		this.content = content;
-		this.dueDate = LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		this.createdDate = LocalDate.parse(createdDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		this.dueDatetime = dueDatetime;
+		this.createdDatetime = createdDatetime;
 	}
 
 	// 新規作成用
 	public Task(Integer personId, String title, Boolean isCompleted, Integer important, String content,
-			String dueDate) {
+			LocalDateTime dueDatetime) {
 		this.personId = personId;
 		this.title = title;
 		this.isCompleted = isCompleted;
 		this.important = important;
 		this.content = content;
-		this.dueDate = LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		this.createdDate = LocalDate.now();
+		this.dueDatetime = dueDatetime;
+		this.createdDatetime = LocalDateTime.now();
 	}
 
 	public Integer getId() {
@@ -87,12 +88,28 @@ public class Task {
 		return content;
 	}
 
-	public String getDueDate() {
-		return dueDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	public LocalDateTime getDueDatetime() {
+		return dueDatetime;
+	}
+	
+	public String getDueDatetimeFormatted() {
+		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+
+		//指定の書式に日付データを渡す
+		return datetimeformatter.format(dueDatetime);
+		 
 	}
 
-	public String getCreatedDate() {
-		return createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	public LocalDateTime getCreatedDatetime() {
+		return createdDatetime;
+	}
+	
+	public String getCreatedDatetimeFormatted() {
+		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+
+		//指定の書式に日付データを渡す
+		return datetimeformatter.format(createdDatetime);
+		 
 	}
 
 }

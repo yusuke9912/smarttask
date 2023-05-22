@@ -18,7 +18,7 @@
 			<form th:action="'/tasks/' + ${task.id} + '/edit'" method="post">
 				<input type="hidden" name="personId" th:value="${task.personId}">
 				<input type="hidden" name="isCompleted" th:value="${task.isCompleted}">
-				<input type="hidden" name="createdDate" th:value="${task.createdDate}">
+				<input type="hidden" name="createdDatetime" th:value="${task.createdDatetime}">
 
 				<div class="row justify-content-center">
 					<div class="col-5 mt-3">
@@ -58,14 +58,14 @@
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
 						<label>期限日</label>
-						<input class="form-control" type="date" name="dueDate" th:value="${task.dueDate}">
+						<input class="form-control" type="datetime-local" name="dueDatetime" th:value="${task.dueDatetime}">
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-5 mt-3">
 						<label>作成日</label>
-						<p th:text="${task.createdDate}"></p>
+						<p th:text="${task.getCreatedDatetimeFormatted()}"></p>
 					</div>
 				</div>
 				<div class="row justify-content-center">

@@ -21,6 +21,6 @@ title TEXT,
 is_completed BOOLEAN,
 important INTEGER,
 content TEXT,
-due_date DATE,
-created_date DATE
+due_datetime TIMESTAMP,
+created_datetime TIMESTAMP
 );
