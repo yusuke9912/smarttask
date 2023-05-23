@@ -11,14 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.Tag;
 import com.example.demo.entity.Task;
+import com.example.demo.repository.TagRepository;
 import com.example.demo.repository.TaskRepository;
 
 @Controller
 public class TaskController {
 	@Autowired
 	TaskRepository taskRepository;
-	
+
+	@Autowired
+	TagRepository tagRepository;
+
 	@GetMapping("/tasks")
 	public String tasks(
 			@RequestParam(name = "sort", defaultValue = "") String sort,
@@ -88,23 +93,28 @@ public class TaskController {
 	@GetMapping("/tasks/add")
 	public String create(Model model) {
 		List<Task> taskList = taskRepository.findAll();
+		List<Tag> tagList = tagRepository.findAll();
 
 		model.addAttribute("tasks", taskList);
-		
+		model.addAttribute("tags", tagList);
+
 		return "addTask";
 	}
 
 	@PostMapping("/tasks/add")
 	public String store(
 			@RequestParam(name = "personId", defaultValue = "") Integer personId,
+			@RequestParam(name = "tagId", defaultValue = "") Integer tagId,
 			@RequestParam(name = "title", defaultValue = "") String title,
 			@RequestParam(name = "isCompleted", defaultValue = "") Boolean isCompleted,
 			@RequestParam(name = "content", defaultValue = "") String content,
 			@RequestParam(name = "important", defaultValue = "") Integer important,
 			@RequestParam(name = "dueDatetime", defaultValue = "") LocalDateTime dueDatetime,
 			Model model) {
+		
+		Tag tag = tagRepository.findById(tagId).get();
 
-		Task task = new Task(personId, title, isCompleted, important, content, dueDatetime);
+		Task task = new Task(personId, tag, title, isCompleted, important, content, dueDatetime);
 		taskRepository.save(task);
 
 		return "redirect:/tasks";
@@ -114,6 +124,9 @@ public class TaskController {
 	public String edit(@PathVariable("id") Integer id, Model model) {
 
 		Task task = taskRepository.findById(id).get();
+		List<Tag> tagList = tagRepository.findAll();
+		
+		model.addAttribute("tags", tagList);
 		model.addAttribute("task", task);
 		return "editTask";
 	}
@@ -122,6 +135,7 @@ public class TaskController {
 	public String update(
 			@PathVariable("id") Integer id,
 			@RequestParam(name = "personId", defaultValue = "") Integer personId,
+			@RequestParam(name = "tagId", defaultValue = "") Integer tagId,
 			@RequestParam(name = "title", defaultValue = "") String title,
 			@RequestParam(name = "isCompleted", defaultValue = "") Boolean isCompleted,
 			@RequestParam(name = "content", defaultValue = "") String content,
@@ -129,8 +143,10 @@ public class TaskController {
 			@RequestParam(name = "dueDatetime", defaultValue = "") LocalDateTime dueDatetime,
 			@RequestParam(name = "createdDatetime", defaultValue = "") LocalDateTime createdDatetime,
 			Model model) {
+		
+		Tag tag = tagRepository.findById(tagId).get();
 
-		Task task = new Task(id, personId, title, isCompleted, important, content, dueDatetime, createdDatetime);
+		Task task = new Task(id, personId, tag, title, isCompleted, important, content, dueDatetime, createdDatetime);
 		taskRepository.save(task);
 
 		return "redirect:/tasks";

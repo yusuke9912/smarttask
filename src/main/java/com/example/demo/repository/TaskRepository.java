@@ -41,4 +41,8 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	@Query("update Task t set t.isCompleted = :bool where t.id = :id")
 	//@Modifying(clearAutomatically = false)
 	int setIsCompleted(@Param("id") Integer id, @Param("bool") Boolean bool);
+
+	@Transactional
+	@Query(value = "SELECT t FROM Task t LEFT JOIN t.tag")
+	List<Task> findAllWithTag();
 }

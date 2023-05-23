@@ -83,6 +83,19 @@
 							<a href="/tasks" class="link-dark d-block h-100 p-2">期限 <i class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
+					<th class="p-0"
+						th:classappend="${sort.equals('tagAsc') || sort.equals('tagDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('tagAsc') && !sort.equals('tagDesc')}">
+							<a href="/tasks?sort=tagAsc" class="link-dark d-block h-100 p-2">タグ</a>
+						</th:block>
+						<th:block th:if="${sort.equals('tagAsc')}">
+							<a href="/tasks?sort=tagDesc" class="link-dark d-block h-100 p-2">タグ <i
+									class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('tagDesc')}">
+							<a href="/tasks" class="link-dark d-block h-100 p-2">タグ <i class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -103,6 +116,7 @@
 							</th:block>
 						</td>
 						<td>[[${task.getDueDatetimeFormatted()}]]</td>
+						<td>[[${task.tagName}]]</td>
 						<td>
 							<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn btn-secondary">
 								<i class="bi bi-pencil"></i>

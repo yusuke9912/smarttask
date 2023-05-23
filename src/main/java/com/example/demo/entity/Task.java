@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +21,10 @@ public class Task {
 
 	@Column(name = "person_id")
 	private Integer personId;
+	
+	@ManyToOne
+	@JoinColumn(name = "tag_id")
+	private Tag tag;
 
 	private String title;
 
@@ -33,17 +39,18 @@ public class Task {
 	private LocalDateTime dueDatetime;
 
 	@Column(name = "created_datetime")
-	
 	private LocalDateTime createdDatetime;
 
 	public Task() {
 	}
 
 	// 更新用
-	public Task(Integer id, Integer personId, String title, Boolean isCompleted, Integer important, String content,
+	public Task(Integer id, Integer personId, Tag tag, String title, Boolean isCompleted, Integer important,
+			String content,
 			LocalDateTime dueDatetime, LocalDateTime createdDatetime) {
 		this.id = id;
 		this.personId = personId;
+		this.tag = tag;
 		this.title = title;
 		this.isCompleted = isCompleted;
 		this.important = important;
@@ -53,9 +60,10 @@ public class Task {
 	}
 
 	// 新規作成用
-	public Task(Integer personId, String title, Boolean isCompleted, Integer important, String content,
+	public Task(Integer personId, Tag tag, String title, Boolean isCompleted, Integer important, String content,
 			LocalDateTime dueDatetime) {
 		this.personId = personId;
+		this.tag = tag;
 		this.title = title;
 		this.isCompleted = isCompleted;
 		this.important = important;
@@ -70,6 +78,14 @@ public class Task {
 
 	public Integer getPersonId() {
 		return personId;
+	}
+
+	public Integer getTagId() {
+		return tag.getId();
+	}
+	
+	public String getTagName() {
+		return tag.getName();
 	}
 
 	public String getTitle() {
@@ -91,25 +107,25 @@ public class Task {
 	public LocalDateTime getDueDatetime() {
 		return dueDatetime;
 	}
-	
+
 	public String getDueDatetimeFormatted() {
 		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 
 		//指定の書式に日付データを渡す
 		return datetimeformatter.format(dueDatetime);
-		 
+
 	}
 
 	public LocalDateTime getCreatedDatetime() {
 		return createdDatetime;
 	}
-	
+
 	public String getCreatedDatetimeFormatted() {
 		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 
 		//指定の書式に日付データを渡す
 		return datetimeformatter.format(createdDatetime);
-		 
+
 	}
 
 }
