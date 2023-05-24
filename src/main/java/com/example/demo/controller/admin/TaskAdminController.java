@@ -26,6 +26,7 @@ public class TaskAdminController {
 
 	@GetMapping("/admin/tasks")
 	public String tasks(
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "") String sort,
 			Model model) {
 
@@ -60,7 +61,8 @@ public class TaskAdminController {
 		} else if (sort.equals("personDesc")) {
 			taskList = taskRepository.findAllByOrderByPersonDesc();
 		}
-
+		
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("tasks", taskList);
 		model.addAttribute("sort", sort);
 

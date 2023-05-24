@@ -35,6 +35,7 @@ public class TaskController {
 
 	@GetMapping("/tasks")
 	public String tasks(
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "") String sort,
 			Model model) {
 		
@@ -43,29 +44,29 @@ public class TaskController {
 		
 		if (sort.isEmpty()) {
 			taskList = taskRepository.findAllByOrderByCreatedDatetimeAsc();
-			taskList = taskRepository.findAllByPersonOrderByCreatedDatetimeAsc(person);
 		} else if (sort.equals("titleAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByTitleAsc(person);
+			taskList = taskRepository.findAllByOrderByTitleAsc();
 		} else if (sort.equals("contentAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByContentAsc(person);
+			taskList = taskRepository.findAllByOrderByContentAsc();
 		} else if (sort.equals("importantAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByImportantAsc(person);
+			taskList = taskRepository.findAllByOrderByImportantAsc();
 		} else if (sort.equals("dueDatetimeAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByDueDatetimeAsc(person);
+			taskList = taskRepository.findAllByOrderByDueDatetimeAsc();
 		} else if (sort.equals("tagAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByTagAsc(person);
+			taskList = taskRepository.findAllByOrderByTagAsc();
 		} else if (sort.equals("titleDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByTitleDesc(person);
+			taskList = taskRepository.findAllByOrderByTitleDesc();
 		} else if (sort.equals("contentDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByContentDesc(person);
+			taskList = taskRepository.findAllByOrderByContentDesc();
 		} else if (sort.equals("importantDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByImportantDesc(person);
+			taskList = taskRepository.findAllByOrderByImportantDesc();
 		} else if (sort.equals("dueDatetimeDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByDueDatetimeDesc(person);
+			taskList = taskRepository.findAllByOrderByDueDatetimeDesc();
 		} else if (sort.equals("tagDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByTagDesc(person);
+			taskList = taskRepository.findAllByOrderByTagDesc();
 		}
-
+		
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("tasks", taskList);
 		model.addAttribute("sort", sort);
 
@@ -80,23 +81,23 @@ public class TaskController {
 		List<Task> taskList = null;
 		Person person = personRepository.findById(account.getPersonId()).get();
 		if (sort.isEmpty()) {
-			taskList = taskRepository.findAllByPersonOrderByCreatedDatetimeAsc(person);
+			taskList = taskRepository.findAllByOrderByCreatedDatetimeAsc();
 		} else if (sort.equals("titleAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByTitleAsc(person);
+			taskList = taskRepository.findAllByOrderByTitleAsc();
 		} else if (sort.equals("contentAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByContentAsc(person);
+			taskList = taskRepository.findAllByOrderByContentAsc();
 		} else if (sort.equals("importantAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByImportantAsc(person);
+			taskList = taskRepository.findAllByOrderByImportantAsc();
 		} else if (sort.equals("dueDatetimeAsc")) {
-			taskList = taskRepository.findAllByPersonOrderByDueDatetimeAsc(person);
+			taskList = taskRepository.findAllByOrderByDueDatetimeAsc();
 		} else if (sort.equals("titleDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByTitleDesc(person);
+			taskList = taskRepository.findAllByOrderByTitleDesc();
 		} else if (sort.equals("contentDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByContentDesc(person);
+			taskList = taskRepository.findAllByOrderByContentDesc();
 		} else if (sort.equals("importantDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByImportantDesc(person);
+			taskList = taskRepository.findAllByOrderByImportantDesc();
 		} else if (sort.equals("dueDatetimeDesc")) {
-			taskList = taskRepository.findAllByPersonOrderByDueDatetimeDesc(person);
+			taskList = taskRepository.findAllByOrderByDueDatetimeDesc();
 		}
 
 		model.addAttribute("tasks", taskList);

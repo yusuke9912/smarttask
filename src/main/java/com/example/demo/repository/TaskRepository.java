@@ -12,7 +12,6 @@ import com.example.demo.entity.Person;
 import com.example.demo.entity.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
-	// 管理者ユーザー用
 	// ASC
 	List<Task> findAllByOrderByCreatedDatetimeAsc();
 
@@ -42,33 +41,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	List<Task> findAllByOrderByTagDesc();
 	
 	List<Task> findAllByOrderByPersonDesc();
-	
-	// 一般ユーザー用
-	// ASC
-	List<Task> findAllByPersonOrderByCreatedDatetimeAsc(Person person);
-
-	List<Task> findAllByPersonOrderByTitleAsc(Person person);
-
-	List<Task> findAllByPersonOrderByContentAsc(Person person);
-
-	List<Task> findAllByPersonOrderByImportantAsc(Person person);
-
-	List<Task> findAllByPersonOrderByDueDatetimeAsc(Person person);
-
-	List<Task> findAllByPersonOrderByTagAsc(Person person);
-
-	// DESC
-	List<Task> findAllByPersonOrderByCreatedDatetimeDesc(Person person);
-
-	List<Task> findAllByPersonOrderByTitleDesc(Person person);
-
-	List<Task> findAllByPersonOrderByContentDesc(Person person);
-
-	List<Task> findAllByPersonOrderByImportantDesc(Person person);
-
-	List<Task> findAllByPersonOrderByDueDatetimeDesc(Person person);
-
-	List<Task> findAllByPersonOrderByTagDesc(Person person);
 
 	@Transactional
 	void deleteByPerson(Person person);
@@ -78,5 +50,5 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	@Query("update Task t set t.isCompleted = :bool where t.id = :id")
 	int setIsCompleted(@Param("id") Integer id, @Param("bool") Boolean bool);
 	
-	List<Task> findAllByTitleContaining(String keyword);
+	List<Task> findAllByTitleContainingOrContentContaining(String keyword1,String keyword2);
 }
