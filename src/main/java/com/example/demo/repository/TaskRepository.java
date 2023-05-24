@@ -8,9 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.entity.Person;
 import com.example.demo.entity.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
+	// 管理者ユーザー用
 	// ASC
 	List<Task> findAllByOrderByCreatedDatetimeAsc();
 
@@ -21,6 +23,10 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	List<Task> findAllByOrderByImportantAsc();
 
 	List<Task> findAllByOrderByDueDatetimeAsc();
+
+	List<Task> findAllByOrderByTagAsc();
+	
+	List<Task> findAllByOrderByPersonAsc();
 
 	// DESC
 	List<Task> findAllByOrderByCreatedDatetimeDesc();
@@ -33,16 +39,44 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
 	List<Task> findAllByOrderByDueDatetimeDesc();
 
+	List<Task> findAllByOrderByTagDesc();
+	
+	List<Task> findAllByOrderByPersonDesc();
+	
+	// 一般ユーザー用
+	// ASC
+	List<Task> findAllByPersonOrderByCreatedDatetimeAsc(Person person);
+
+	List<Task> findAllByPersonOrderByTitleAsc(Person person);
+
+	List<Task> findAllByPersonOrderByContentAsc(Person person);
+
+	List<Task> findAllByPersonOrderByImportantAsc(Person person);
+
+	List<Task> findAllByPersonOrderByDueDatetimeAsc(Person person);
+
+	List<Task> findAllByPersonOrderByTagAsc(Person person);
+
+	// DESC
+	List<Task> findAllByPersonOrderByCreatedDatetimeDesc(Person person);
+
+	List<Task> findAllByPersonOrderByTitleDesc(Person person);
+
+	List<Task> findAllByPersonOrderByContentDesc(Person person);
+
+	List<Task> findAllByPersonOrderByImportantDesc(Person person);
+
+	List<Task> findAllByPersonOrderByDueDatetimeDesc(Person person);
+
+	List<Task> findAllByPersonOrderByTagDesc(Person person);
+
 	@Transactional
-	void deleteByPersonId(Integer personId);
+	void deleteByPerson(Person person);
 
 	@Transactional
 	@Modifying
 	@Query("update Task t set t.isCompleted = :bool where t.id = :id")
-	//@Modifying(clearAutomatically = false)
 	int setIsCompleted(@Param("id") Integer id, @Param("bool") Boolean bool);
-
-	@Transactional
-	@Query(value = "SELECT t FROM Task t LEFT JOIN t.tag")
-	List<Task> findAllWithTag();
+	
+	List<Task> findAllByTitleContaining(String keyword);
 }

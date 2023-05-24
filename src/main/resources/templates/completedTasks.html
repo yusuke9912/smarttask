@@ -29,72 +29,81 @@
 			</ul>
 			<table class="table">
 				<tr>
-					<th>
+					<th></th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('titleAsc') || sort.equals('titleDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('titleAsc') && !sort.equals('titleDesc')}">
-							<a href="/tasks/completed?sort=titleAsc" class="link-dark">タスク</a>
+							<a href="/tasks/completed?sort=titleAsc" class="link-dark d-block h-100 p-2">タスク</a>
 						</th:block>
 						<th:block th:if="${sort.equals('titleAsc')}">
-							<a href="/tasks/completed?sort=titleDesc" class="link-dark">タスク</a> <i
+							<a href="/tasks/completed?sort=titleDesc" class="link-dark d-block h-100 p-2">タスク</a> <i
 								class="bi bi-caret-down-fill"></i>
 						</th:block>
 						<th:block th:if="${sort.equals('titleDesc')}">
-							<a href="/tasks/completed" class="link-dark">タスク</a> <i class="bi bi-caret-up-fill"></i>
+							<a href="/tasks/completed" class="link-dark d-block h-100 p-2">タスク</a> <i
+								class="bi bi-caret-up-fill"></i>
 						</th:block>
 					</th>
-					<th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('contentAsc') || sort.equals('contentDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('contentAsc') && !sort.equals('contentDesc')}">
-							<a href="/tasks/completed?sort=contentAsc" class="link-dark">内容</a>
+							<a href="/tasks/completed?sort=contentAsc" class="link-dark d-block h-100 p-2">内容</a>
 						</th:block>
 						<th:block th:if="${sort.equals('contentAsc')}">
-							<a href="/tasks/completed?sort=contentDesc" class="link-dark">内容</a> <i class="bi bi-caret-down-fill">
+							<a href="/tasks/completed?sort=contentDesc" class="link-dark d-block h-100 p-2">内容</a> <i
+								class="bi bi-caret-down-fill">
 						</th:block>
 						<th:block th:if="${sort.equals('contentDesc')}">
-							<a href="/tasks/completed" class="link-dark">内容</a> <i class="bi bi-caret-up-fill">
+							<a href="/tasks/completed" class="link-dark d-block h-100 p-2">内容</a> <i
+								class="bi bi-caret-up-fill">
 						</th:block>
 					</th>
-					<th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('importantAsc') || sort.equals('importantDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('importantAsc') && !sort.equals('importantDesc')}">
-							<a href="/tasks/completed?sort=importantAsc" class="link-dark">重要度</a>
+							<a href="/tasks/completed?sort=importantAsc" class="link-dark d-block h-100 p-2">重要度</a>
 						</th:block>
 						<th:block th:if="${sort.equals('importantAsc')}">
-							<a href="/tasks/completed?sort=importantDesc" class="link-dark">重要度</a> <i
+							<a href="/tasks/completed?sort=importantDesc" class="link-dark d-block h-100 p-2">重要度</a> <i
 								class="bi bi-caret-down-fill">
 						</th:block>
 						<th:block th:if="${sort.equals('importantDesc')}">
-							<a href="/tasks/completed" class="link-dark">重要度</a> <i class="bi bi-caret-up-fill">
+							<a href="/tasks/completed" class="link-dark d-block h-100 p-2">重要度</a> <i
+								class="bi bi-caret-up-fill">
 						</th:block>
 					</th>
-					<th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('dueDatetimeAsc') || sort.equals('dueDatetimeDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('dueDatetimeAsc') && !sort.equals('dueDatetimeDesc')}">
-							<a href="/tasks/completed?sort=dueDatetimeAsc" class="link-dark">期限</a>
+							<a href="/tasks/completed?sort=dueDatetimeAsc" class="link-dark d-block h-100 p-2">期限</a>
 						</th:block>
 						<th:block th:if="${sort.equals('dueDatetimeAsc')}">
-							<a href="/tasks/completed?sort=dueDatetimeDesc" class="link-dark">期限</a> <i
-								class="bi bi-caret-down-fill">
+							<a href="/tasks/completed?sort=dueDatetimeDesc" class="link-dark d-block h-100 p-2">期限</a>
+							<i class="bi bi-caret-down-fill">
 						</th:block>
 						<th:block th:if="${sort.equals('dueDatetimeDesc')}">
-							<a href="/tasks/completed" class="link-dark">期限</a> <i class="bi bi-caret-up-fill">
+							<a href="/tasks/completed" class="link-dark d-block h-100 p-2">期限</a> <i
+								class="bi bi-caret-up-fill">
 						</th:block>
 					</th>
-					<th></th>
 					<th></th>
 				</tr>
 				<tr th:each="task: ${tasks}">
-					<th:block th:if="${task.isCompleted == true && task.personId == @account.personId}">
-						<td>[[${task.title}]]</td>
-						<td>[[${task.content}]]</td>
-						<td>
+					<th:block th:if="${task.isCompleted == true}">
+						<td class="align-middle text-center">
+							<form th:action="'/tasks/' + ${task.id} + '/incomplete'" method="post">
+								<button class="btn btn-secondary">戻る</button>
+							</form>
+						</td>
+						<td class="align-middle text-center">[[${task.title}]]</td>
+						<td class="align-middle text-center">[[${task.content}]]</td>
+						<td class="align-middle text-center">
 							<th:block th:each="i : ${#numbers.sequence(1,task.important)}">
 								★
 							</th:block>
 						</td>
-						<td>[[${task.getDueDatetimeFormatted}]]</td>
-						<td>
-							<form th:action="'/tasks/' + ${task.id} + '/incomplete'" method="post">
-								<button class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></button>
-							</form>
-						</td>
-						<td>
+						<td class="align-middle text-center">[[${task.getDueDatetimeFormatted}]]</td>
+						<td class="align-middle text-center">
 							<form th:action="'/tasks/' + ${task.id} + '/delete'" method="post">
 								<button class="btn btn-secondary"><i class="bi bi-trash"></i></button>
 							</form>

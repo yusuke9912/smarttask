@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="h-100">
+
+<head>
+	<meta charset="UTF-8">
+	<title>TODO管理ツール</title>
+	<link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+</head>
+
+<body class="d-flex flex-column h-100">
+	<header th:replace="header"></header>
+
+	<main class="h-100">
+		<div class="container">
+			<div class="container d-flex flex-wrap justify-content-center mb-4">
+				<h4 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+					タスク一覧</h4>
+				<a class="btn btn-danger" href="/tasks/add"><i class="bi bi-plus-lg"></i> 新規作成</a>
+			</div>
+
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a href="/admin/tasks" class="nav-link" data-bs-toggle="tab">未完了</a>
+				</li>
+				<li class="nav-item">
+					<a href="/admin/tasks/completed" class="nav-link active" data-bs-toggle="tab">完了済み</a>
+				</li>
+			</ul>
+			<table class="table">
+				<tr>
+					<th></th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('titleAsc') || sort.equals('titleDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('titleAsc') && !sort.equals('titleDesc')}">
+							<a href="/admin/tasks/completed?sort=titleAsc" class="link-dark d-block h-100 p-2">タスク</a>
+						</th:block>
+						<th:block th:if="${sort.equals('titleAsc')}">
+							<a href="/admin/tasks/completed?sort=titleDesc" class="link-dark d-block h-100 p-2">タスク <i
+								class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('titleDesc')}">
+							<a href="/admin/tasks/completed" class="link-dark d-block h-100 p-2">タスク <i
+								class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('contentAsc') || sort.equals('contentDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('contentAsc') && !sort.equals('contentDesc')}">
+							<a href="/admin/tasks/completed?sort=contentAsc" class="link-dark d-block h-100 p-2">内容</a>
+						</th:block>
+						<th:block th:if="${sort.equals('contentAsc')}">
+							<a href="/admin/tasks/completed?sort=contentDesc" class="link-dark d-block h-100 p-2">内容 <i
+								class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('contentDesc')}">
+							<a href="/admin/tasks/completed" class="link-dark d-block h-100 p-2">内容 <i class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('importantAsc') || sort.equals('importantDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('importantAsc') && !sort.equals('importantDesc')}">
+							<a href="/admin/tasks/completed?sort=importantAsc" class="link-dark d-block h-100 p-2">重要度</a>
+						</th:block>
+						<th:block th:if="${sort.equals('importantAsc')}">
+							<a href="/admin/tasks/completed?sort=importantDesc" class="link-dark d-block h-100 p-2">重要度 <i
+								class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('importantDesc')}">
+							<a href="/admin/tasks/completed" class="link-dark d-block h-100 p-2">重要度 <i class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('dueDatetimeAsc') || sort.equals('dueDatetimeDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('dueDatetimeAsc') && !sort.equals('dueDatetimeDesc')}">
+							<a href="/admin/tasks/completed?sort=dueDatetimeAsc" class="link-dark d-block h-100 p-2">期限</a>
+						</th:block>
+						<th:block th:if="${sort.equals('dueDatetimeAsc')}">
+							<a href="/admin/tasks/completed?sort=dueDatetimeDesc" class="link-dark d-block h-100 p-2">期限 <i
+								class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('dueDatetimeDesc')}">
+							<a href="/admin/tasks/completed" class="link-dark d-block h-100 p-2">期限 <i class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('personAsc') || sort.equals('personDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('personAsc') && !sort.equals('personDesc')}">
+							<a href="/admin/tasks/completed?sort=personAsc" class="link-dark d-block h-100 p-2">作成者</a>
+						</th:block>
+						<th:block th:if="${sort.equals('personAsc')}">
+							<a href="/admin/tasks/completed?sort=personDesc" class="link-dark d-block h-100 p-2">作成者 <i
+									class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('personDesc')}">
+							<a href="/admin/tasks/completed" class="link-dark d-block h-100 p-2">作成者 <i
+									class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('createdDatetimeAsc') || sort.equals('createdDatetimeDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('createdDatetimeAsc') && !sort.equals('createdDatetimeDesc')}">
+							<a href="/admin/tasks/completed?sort=createdDatetimeAsc"
+								class="link-dark d-block h-100 p-2">作成日</a>
+						</th:block>
+						<th:block th:if="${sort.equals('createdDatetimeAsc')}">
+							<a href="/admin/tasks/completed?sort=createdDatetimeDesc"
+								class="link-dark d-block h-100 p-2">作成日 <i class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('createdDatetimeDesc')}">
+							<a href="/admin/tasks/completed" class="link-dark d-block h-100 p-2">作成日 <i
+									class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th></th>
+				</tr>
+				<tr th:each="task: ${tasks}">
+					<th:block th:if="${task.isCompleted == true}">
+						<td>
+							<form th:action="'/tasks/' + ${task.id} + '/incomplete'" method="post">
+								<button class="btn btn-secondary">戻す</button>
+							</form>
+						</td>
+						<td class="align-middle text-center">[[${task.title}]]</td>
+						<td class="align-middle text-center">[[${task.content}]]</td>
+						<td class="align-middle text-center">
+							<th:block th:each="i : ${#numbers.sequence(1,task.important)}">
+								★
+							</th:block>
+						</td>
+						<td class="align-middle text-center">[[${task.getDueDatetimeFormatted}]]</td>
+						<td class="align-middle text-center">
+							[[${task.personName}]]
+						</td>
+						<td class="align-middle text-center">
+							[[${task.createdDatetimeFormatted}]]
+						</td>
+						<td>
+							<form th:action="'/tasks/' + ${task.id} + '/delete'" method="post">
+								<button class="btn btn-secondary"><i class="bi bi-trash"></i></button>
+							</form>
+						</td>
+					</th:block>
+				</tr>
+			</table>
+		</div>
+
+	</main>
+
+	<footer th:replace="footer"></footer>
+</body>
+
+</html>

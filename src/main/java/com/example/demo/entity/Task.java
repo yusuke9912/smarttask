@@ -18,9 +18,10 @@ public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
-	@Column(name = "person_id")
-	private Integer personId;
+	
+	@ManyToOne
+	@JoinColumn(name = "person_id")
+	private Person person;
 	
 	@ManyToOne
 	@JoinColumn(name = "tag_id")
@@ -45,11 +46,11 @@ public class Task {
 	}
 
 	// 更新用
-	public Task(Integer id, Integer personId, Tag tag, String title, Boolean isCompleted, Integer important,
+	public Task(Integer id, Person person, Tag tag, String title, Boolean isCompleted, Integer important,
 			String content,
 			LocalDateTime dueDatetime, LocalDateTime createdDatetime) {
 		this.id = id;
-		this.personId = personId;
+		this.person = person;
 		this.tag = tag;
 		this.title = title;
 		this.isCompleted = isCompleted;
@@ -60,9 +61,9 @@ public class Task {
 	}
 
 	// 新規作成用
-	public Task(Integer personId, Tag tag, String title, Boolean isCompleted, Integer important, String content,
+	public Task(Person person, Tag tag, String title, Boolean isCompleted, Integer important, String content,
 			LocalDateTime dueDatetime) {
-		this.personId = personId;
+		this.person = person;
 		this.tag = tag;
 		this.title = title;
 		this.isCompleted = isCompleted;
@@ -77,7 +78,11 @@ public class Task {
 	}
 
 	public Integer getPersonId() {
-		return personId;
+		return person.getId();
+	}
+	
+	public String getPersonName() {
+		return person.getName();
 	}
 
 	public Integer getTagId() {

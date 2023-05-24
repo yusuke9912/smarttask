@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.Person;
 import com.example.demo.entity.Tag;
 import com.example.demo.entity.Task;
+import com.example.demo.model.Account;
+import com.example.demo.repository.PersonRepository;
 import com.example.demo.repository.TagRepository;
 import com.example.demo.repository.TaskRepository;
 
@@ -24,31 +27,43 @@ public class TaskController {
 	@Autowired
 	TagRepository tagRepository;
 
+	@Autowired
+	PersonRepository personRepository;
+
+	@Autowired
+	Account account;
+
 	@GetMapping("/tasks")
 	public String tasks(
 			@RequestParam(name = "sort", defaultValue = "") String sort,
 			Model model) {
-
+		
 		List<Task> taskList = null;
-
+		Person person = personRepository.findById(account.getPersonId()).get();
+		
 		if (sort.isEmpty()) {
 			taskList = taskRepository.findAllByOrderByCreatedDatetimeAsc();
+			taskList = taskRepository.findAllByPersonOrderByCreatedDatetimeAsc(person);
 		} else if (sort.equals("titleAsc")) {
-			taskList = taskRepository.findAllByOrderByTitleAsc();
+			taskList = taskRepository.findAllByPersonOrderByTitleAsc(person);
 		} else if (sort.equals("contentAsc")) {
-			taskList = taskRepository.findAllByOrderByContentAsc();
+			taskList = taskRepository.findAllByPersonOrderByContentAsc(person);
 		} else if (sort.equals("importantAsc")) {
-			taskList = taskRepository.findAllByOrderByImportantAsc();
+			taskList = taskRepository.findAllByPersonOrderByImportantAsc(person);
 		} else if (sort.equals("dueDatetimeAsc")) {
-			taskList = taskRepository.findAllByOrderByDueDatetimeAsc();
+			taskList = taskRepository.findAllByPersonOrderByDueDatetimeAsc(person);
+		} else if (sort.equals("tagAsc")) {
+			taskList = taskRepository.findAllByPersonOrderByTagAsc(person);
 		} else if (sort.equals("titleDesc")) {
-			taskList = taskRepository.findAllByOrderByTitleDesc();
+			taskList = taskRepository.findAllByPersonOrderByTitleDesc(person);
 		} else if (sort.equals("contentDesc")) {
-			taskList = taskRepository.findAllByOrderByContentDesc();
+			taskList = taskRepository.findAllByPersonOrderByContentDesc(person);
 		} else if (sort.equals("importantDesc")) {
-			taskList = taskRepository.findAllByOrderByImportantDesc();
+			taskList = taskRepository.findAllByPersonOrderByImportantDesc(person);
 		} else if (sort.equals("dueDatetimeDesc")) {
-			taskList = taskRepository.findAllByOrderByDueDatetimeDesc();
+			taskList = taskRepository.findAllByPersonOrderByDueDatetimeDesc(person);
+		} else if (sort.equals("tagDesc")) {
+			taskList = taskRepository.findAllByPersonOrderByTagDesc(person);
 		}
 
 		model.addAttribute("tasks", taskList);
@@ -63,25 +78,25 @@ public class TaskController {
 			Model model) {
 
 		List<Task> taskList = null;
-
+		Person person = personRepository.findById(account.getPersonId()).get();
 		if (sort.isEmpty()) {
-			taskList = taskRepository.findAllByOrderByCreatedDatetimeAsc();
+			taskList = taskRepository.findAllByPersonOrderByCreatedDatetimeAsc(person);
 		} else if (sort.equals("titleAsc")) {
-			taskList = taskRepository.findAllByOrderByTitleAsc();
+			taskList = taskRepository.findAllByPersonOrderByTitleAsc(person);
 		} else if (sort.equals("contentAsc")) {
-			taskList = taskRepository.findAllByOrderByContentAsc();
+			taskList = taskRepository.findAllByPersonOrderByContentAsc(person);
 		} else if (sort.equals("importantAsc")) {
-			taskList = taskRepository.findAllByOrderByImportantAsc();
+			taskList = taskRepository.findAllByPersonOrderByImportantAsc(person);
 		} else if (sort.equals("dueDatetimeAsc")) {
-			taskList = taskRepository.findAllByOrderByDueDatetimeAsc();
+			taskList = taskRepository.findAllByPersonOrderByDueDatetimeAsc(person);
 		} else if (sort.equals("titleDesc")) {
-			taskList = taskRepository.findAllByOrderByTitleDesc();
+			taskList = taskRepository.findAllByPersonOrderByTitleDesc(person);
 		} else if (sort.equals("contentDesc")) {
-			taskList = taskRepository.findAllByOrderByContentDesc();
+			taskList = taskRepository.findAllByPersonOrderByContentDesc(person);
 		} else if (sort.equals("importantDesc")) {
-			taskList = taskRepository.findAllByOrderByImportantDesc();
+			taskList = taskRepository.findAllByPersonOrderByImportantDesc(person);
 		} else if (sort.equals("dueDatetimeDesc")) {
-			taskList = taskRepository.findAllByOrderByDueDatetimeDesc();
+			taskList = taskRepository.findAllByPersonOrderByDueDatetimeDesc(person);
 		}
 
 		model.addAttribute("tasks", taskList);
@@ -111,13 +126,18 @@ public class TaskController {
 			@RequestParam(name = "important", defaultValue = "") Integer important,
 			@RequestParam(name = "dueDatetime", defaultValue = "") LocalDateTime dueDatetime,
 			Model model) {
-		
-		Tag tag = tagRepository.findById(tagId).get();
 
-		Task task = new Task(personId, tag, title, isCompleted, important, content, dueDatetime);
+		Tag tag = tagRepository.findById(tagId).get();
+		Person person = personRepository.findById(personId).get();
+
+		Task task = new Task(person, tag, title, isCompleted, important, content, dueDatetime);
 		taskRepository.save(task);
 
-		return "redirect:/tasks";
+		if (account.getIsAdmin()) {
+			return "redirect:/admin/tasks";
+		} else {
+			return "redirect:/tasks";
+		}
 	}
 
 	@GetMapping("/tasks/{id}/edit")
@@ -125,7 +145,7 @@ public class TaskController {
 
 		Task task = taskRepository.findById(id).get();
 		List<Tag> tagList = tagRepository.findAll();
-		
+
 		model.addAttribute("tags", tagList);
 		model.addAttribute("task", task);
 		return "editTask";
@@ -143,13 +163,18 @@ public class TaskController {
 			@RequestParam(name = "dueDatetime", defaultValue = "") LocalDateTime dueDatetime,
 			@RequestParam(name = "createdDatetime", defaultValue = "") LocalDateTime createdDatetime,
 			Model model) {
-		
-		Tag tag = tagRepository.findById(tagId).get();
 
-		Task task = new Task(id, personId, tag, title, isCompleted, important, content, dueDatetime, createdDatetime);
+		Tag tag = tagRepository.findById(tagId).get();
+		Person person = personRepository.findById(personId).get();
+
+		Task task = new Task(id, person, tag, title, isCompleted, important, content, dueDatetime, createdDatetime);
 		taskRepository.save(task);
 
-		return "redirect:/tasks";
+		if (account.getIsAdmin()) {
+			return "redirect:/admin/tasks";
+		} else {
+			return "redirect:/tasks";
+		}
 	}
 
 	@PostMapping("/tasks/{id}/delete")
@@ -157,14 +182,22 @@ public class TaskController {
 
 		taskRepository.deleteById(id);
 
-		return "redirect:/tasks";
+		if (account.getIsAdmin()) {
+			return "redirect:/admin/tasks";
+		} else {
+			return "redirect:/tasks";
+		}
 	}
 
 	@PostMapping("/tasks/{id}/complete")
 	public String complete(@PathVariable("id") Integer id, Model model) {
 		taskRepository.setIsCompleted(id, true);
 
-		return "redirect:/tasks";
+		if (account.getIsAdmin()) {
+			return "redirect:/admin/tasks";
+		} else {
+			return "redirect:/tasks";
+		}
 	}
 
 	@PostMapping("/tasks/{id}/incomplete")
@@ -172,6 +205,10 @@ public class TaskController {
 
 		taskRepository.setIsCompleted(id, false);
 
-		return "redirect:/tasks/completed";
+		if (account.getIsAdmin()) {
+			return "redirect:/admin/tasks/completed";
+		} else {
+			return "redirect:/tasks/completed";
+		}
 	}
 }

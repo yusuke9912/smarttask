@@ -8,6 +8,7 @@ import org.springframework.web.context.annotation.SessionScope;
 public class Account {
 	private String name;
 	private Integer personId;
+	private Boolean isAdmin;
 
 	public Account() {
 	}
@@ -23,6 +24,10 @@ public class Account {
 	public Integer getPersonId() {
 		return personId;
 	}
+	
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -30,5 +35,9 @@ public class Account {
 	
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+	
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

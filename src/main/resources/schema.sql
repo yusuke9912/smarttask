@@ -9,7 +9,8 @@ CREATE TABLE persons
 id SERIAL PRIMARY KEY,
 name TEXT,
 email TEXT,
-password TEXT
+password TEXT,
+is_admin BOOLEAN
 );
 
 -- タグテーブル

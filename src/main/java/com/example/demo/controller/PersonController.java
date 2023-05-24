@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Person;
+import com.example.demo.entity.Task;
 import com.example.demo.model.Account;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.repository.TaskRepository;
@@ -29,6 +31,21 @@ public class PersonController {
 
 	@Autowired
 	Account account;
+	
+	@GetMapping("/persons")
+	public String persons(
+			@RequestParam(name = "sort", defaultValue = "") String sort,
+			Model model) {
+
+		
+		List<Person> personList = personRepository.findAll();
+		
+
+		model.addAttribute("persons", personList);
+		model.addAttribute("sort", sort);
+
+		return "admin/persons";
+	}
 
 	@GetMapping("/persons/add")
 	public String create() {
@@ -125,7 +142,8 @@ public class PersonController {
 	@PostMapping("/persons/delete")
 	public String delete() {
 		//ユーザーに紐づいたタスクを削除
-		taskRepository.deleteByPersonId(account.getPersonId());
+		Person person = personRepository.findById(account.getPersonId()).get();
+		taskRepository.deleteByPerson(person);
 		
 		//ユーザー自体を削除
 		personRepository.deleteById(account.getPersonId());

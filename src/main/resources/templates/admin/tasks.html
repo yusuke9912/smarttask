@@ -15,99 +15,122 @@
 		<div class="container">
 			<div class="container d-flex flex-wrap justify-content-center mb-4">
 				<h4 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
-					タスク一覧</h4>
-				<a class="btn btn-danger" href="/tasks/add"><i class="bi bi-plus-lg"></i> 新規作成</a>
+					タスク一覧（管理者用）</h4>
+				<a class="btn btn-danger" href="/admin/tasks/add"><i class="bi bi-plus-lg"></i> 新規作成</a>
+			</div>
+
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="キーワードを入力">
+				<button class="btn btn-primary" type="button" id="button-addon2"><i class="fas fa-search"></i>
+					検索</button>
 			</div>
 
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a href="/tasks" class="nav-link active" data-bs-toggle="tab">未完了</a>
+					<a href="/admin/tasks" class="nav-link active" data-bs-toggle="tab">未完了</a>
 				</li>
 				<li class="nav-item">
-					<a href="/tasks/completed" class="nav-link" data-bs-toggle="tab">完了済み</a>
+					<a href="/admin/tasks/completed" class="nav-link" data-bs-toggle="tab">完了済み</a>
 				</li>
-
 			</ul>
-			<form action="/tasks" method="get">
-			<div class="d-flex bd-highlight my-3 justify-content-between">
-				<div class="input-group w-25 me-2">
-					<input type="text" class="form-control" name="keyword" placeholder="キーワードを入力">
-					<button class="btn btn-primary"><i class="bi bi-search"></i></button>
-				</div>
-				<a class="btn btn-danger" href="/tasks/add"><i class="bi bi-plus-lg"></i> 新規作成</a>
-			</div>
-			</form>
-
 			<table class="table">
 				<tr>
 					<th></th>
 					<th class="p-0 text-center"
 						th:classappend="${sort.equals('titleAsc') || sort.equals('titleDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('titleAsc') && !sort.equals('titleDesc')}">
-							<a href="/tasks?sort=titleAsc" class="link-dark d-block h-100 p-2">タスク</a>
+							<a href="/admin/tasks?sort=titleAsc" class="link-dark d-block h-100 p-2">タスク</a>
 						</th:block>
 						<th:block th:if="${sort.equals('titleAsc')}">
-							<a href="/tasks?sort=titleDesc" class="link-dark d-block h-100 p-2">タスク <i
+							<a href="/admin/tasks?sort=titleDesc" class="link-dark d-block h-100 p-2">タスク <i
 									class="bi bi-caret-down-fill"></i></a>
 						</th:block>
 						<th:block th:if="${sort.equals('titleDesc')}">
-							<a href="/tasks" class="link-dark d-block h-100 p-2">タスク <i
+							<a href="/admin/tasks" class="link-dark d-block h-100 p-2">タスク <i
 									class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
 					<th class="p-0 text-center"
 						th:classappend="${sort.equals('contentAsc') || sort.equals('contentDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('contentAsc') && !sort.equals('contentDesc')}">
-							<a href="/tasks?sort=contentAsc" class="link-dark d-block h-100 p-2">内容</a>
+							<a href="/admin/tasks?sort=contentAsc" class="link-dark d-block h-100 p-2">内容</a>
 						</th:block>
 						<th:block th:if="${sort.equals('contentAsc')}">
-							<a href="/tasks?sort=contentDesc" class="link-dark d-block h-100 p-2">内容 <i
+							<a href="/admin/tasks?sort=contentDesc" class="link-dark d-block h-100 p-2">内容 <i
 									class="bi bi-caret-down-fill"></i></a>
 						</th:block>
 						<th:block th:if="${sort.equals('contentDesc')}">
-							<a href="/tasks" class="link-dark d-block h-100 p-2">内容 <i
+							<a href="/admin/tasks" class="link-dark d-block h-100 p-2">内容 <i
 									class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
 					<th class="p-0 text-center"
 						th:classappend="${sort.equals('importantAsc') || sort.equals('importantDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('importantAsc') && !sort.equals('importantDesc')}">
-							<a href="/tasks?sort=importantAsc" class="link-dark d-block h-100 p-2">重要度</a>
+							<a href="/admin/tasks?sort=importantAsc" class="link-dark d-block h-100 p-2">重要度</a>
 						</th:block>
 						<th:block th:if="${sort.equals('importantAsc')}">
-							<a href="/tasks?sort=importantDesc" class="link-dark d-block h-100 p-2">重要度 <i
+							<a href="/admin/tasks?sort=importantDesc" class="link-dark d-block h-100 p-2">重要度 <i
 									class="bi bi-caret-down-fill"></i></a>
 						</th:block>
 						<th:block th:if="${sort.equals('importantDesc')}">
-							<a href="/tasks" class="link-dark d-block h-100 p-2">重要度 <i
+							<a href="/admin/tasks" class="link-dark d-block h-100 p-2">重要度 <i
 									class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
 					<th class="p-0 text-center"
 						th:classappend="${sort.equals('dueDatetimeAsc') || sort.equals('dueDatetimeDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('dueDatetimeAsc') && !sort.equals('dueDatetimeDesc')}">
-							<a href="/tasks?sort=dueDatetimeAsc" class="link-dark d-block h-100 p-2">期限</a>
+							<a href="/admin/tasks?sort=dueDatetimeAsc" class="link-dark d-block h-100 p-2">期限</a>
 						</th:block>
 						<th:block th:if="${sort.equals('dueDatetimeAsc')}">
-							<a href="/tasks?sort=dueDatetimeDesc" class="link-dark d-block h-100 p-2">期限 <i
+							<a href="/admin/tasks?sort=dueDatetimeDesc" class="link-dark d-block h-100 p-2">期限 <i
 									class="bi bi-caret-down-fill"></i></a>
 						</th:block>
 						<th:block th:if="${sort.equals('dueDatetimeDesc')}">
-							<a href="/tasks" class="link-dark d-block h-100 p-2">期限 <i
+							<a href="/admin/tasks" class="link-dark d-block h-100 p-2">期限 <i
 									class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
 					<th class="p-0 text-center"
 						th:classappend="${sort.equals('tagAsc') || sort.equals('tagDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('tagAsc') && !sort.equals('tagDesc')}">
-							<a href="/tasks?sort=tagAsc" class="link-dark d-block h-100 p-2">タグ</a>
+							<a href="/admin/tasks?sort=tagAsc" class="link-dark d-block h-100 p-2">タグ</a>
 						</th:block>
 						<th:block th:if="${sort.equals('tagAsc')}">
-							<a href="/tasks?sort=tagDesc" class="link-dark d-block h-100 p-2">タグ <i
+							<a href="/admin/tasks?sort=tagDesc" class="link-dark d-block h-100 p-2">タグ <i
 									class="bi bi-caret-down-fill"></i></a>
 						</th:block>
 						<th:block th:if="${sort.equals('tagDesc')}">
-							<a href="/tasks" class="link-dark d-block h-100 p-2">タグ <i
+							<a href="/admin/tasks" class="link-dark d-block h-100 p-2">タグ <i
+									class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('personAsc') || sort.equals('personDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('personAsc') && !sort.equals('personDesc')}">
+							<a href="/admin/tasks?sort=personAsc" class="link-dark d-block h-100 p-2">作成者</a>
+						</th:block>
+						<th:block th:if="${sort.equals('personAsc')}">
+							<a href="/admin/tasks?sort=personDesc" class="link-dark d-block h-100 p-2">作成者 <i
+									class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('personDesc')}">
+							<a href="/admin/tasks" class="link-dark d-block h-100 p-2">作成者 <i
+									class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0 text-center"
+						th:classappend="${sort.equals('createdDatetimeAsc') || sort.equals('createdDatetimeDesc')} ? 'table-secondary' : '' ">
+						<th:block th:if="${!sort.equals('createdDatetimeAsc') && !sort.equals('createdDatetimeDesc')}">
+							<a href="/admin/tasks?sort=createdDatetimeAsc" class="link-dark d-block h-100 p-2">作成日</a>
+						</th:block>
+						<th:block th:if="${sort.equals('createdDatetimeAsc')}">
+							<a href="/admin/tasks?sort=createdDatetimeDesc" class="link-dark d-block h-100 p-2">作成日 <i
+									class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('createdDatetimeDesc')}">
+							<a href="/admin/tasks" class="link-dark d-block h-100 p-2">作成日 <i
 									class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
@@ -135,6 +158,12 @@
 							<span class="border border-secondary rounded-pill py-1 px-2">
 								[[${task.tagName}]]
 							</span>
+						</td>
+						<td class="align-middle text-center">
+							[[${task.personName}]]
+						</td>
+						<td class="align-middle text-center">
+							[[${task.createdDatetimeFormatted}]]
 						</td>
 						<td>
 							<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn btn-secondary">

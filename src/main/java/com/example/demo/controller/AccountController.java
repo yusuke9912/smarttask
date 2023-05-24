@@ -68,9 +68,14 @@ public class AccountController {
 		// セッション管理されたアカウント情報に名前をセット
 		account.setName(person.getName());
 		account.setPersonId(person.getId());
+		account.setIsAdmin(person.getIsAdmin());
 
-		// 「/items」へのリダイレクト
-		return "redirect:/tasks";
+		if (account.getIsAdmin()) {
+			return "redirect:/admin/tasks";
+		} else {
+			return "redirect:/tasks";
+		}
+
 	}
 
 	@GetMapping("/account")
