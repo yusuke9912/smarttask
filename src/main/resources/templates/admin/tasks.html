@@ -154,7 +154,7 @@
 						</td>
 						<td class="align-middle text-center">[[${task.getDueDatetimeFormatted()}]]</td>
 						<td class="align-middle text-center">
-							<span class="border border-secondary rounded-pill py-1 px-2">
+							<span class="text-white rounded-pill py-1 px-2"th:classappend="${task.tagId == 1 ? 'bg-danger' : (task.tagId == 2 ? 'bg-primary' : (task.tagId == 3 ? 'bg-success' : (task.tagId == 4 ? 'bg-warning' : 'bg-secondary')))}">
 								[[${task.tagName}]]
 							</span>
 						</td>
