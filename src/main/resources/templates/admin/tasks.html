@@ -13,7 +13,24 @@
 
 	<main class="flex-shrink-0">
 		<div class="container">
-			<h4>タスク一覧（管理者用）</h4>
+			<div class="d-flex justify-content-between align-items-center">
+				<h4>タスク一覧（管理者用）</h4>
+				<div class="d-flex align-items-center">
+					<form action="/admin/tasks" method="get" id="max_count_form" class="d-flex align-items-center">
+						<input type="hidden" name="sort" th:value="${sort}">
+						<input type="hidden" name="direction" th:value="${direction}">
+
+						<select class="form-select me-3" name="maxCount" id="max_count_select">
+							<option value="5" th:selected="${maxCount == 5}">5件</option>
+							<option value="10" th:selected="${maxCount == 10}">10件</option>
+							<option value="20" th:selected="${maxCount == 20}">20件</option>
+						</select>
+					</form>
+
+					<a class="btn btn-danger" href="/admin/tasks/add"><i class="bi bi-plus-lg"></i> 新規作成</a>
+				</div>
+
+			</div>
 
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
@@ -24,127 +41,132 @@
 				</li>
 			</ul>
 
-			<form action="/admin/tasks" method="get">
-				<div class="d-flex bd-highlight my-3 justify-content-between">
-					<div class="input-group w-25 me-2">
-						<input type="text" class="form-control" name="keyword" th:value="${keyword}"
-							placeholder="キーワードを入力">
-						<button class="btn btn-primary"><i class="bi bi-search"></i></button>
-					</div>
-					<a class="btn btn-danger" href="/tasks/add"><i class="bi bi-plus-lg"></i> 新規作成</a>
-				</div>
-			</form>
+			<!--			<form action="/admin/tasks" method="get">-->
+			<!--				<div class="d-flex bd-highlight my-3 justify-content-between">-->
+			<!--					<div class="input-group w-25 me-2">-->
+			<!--						<input type="text" class="form-control" name="keyword" th:value="${keyword}"-->
+			<!--							placeholder="キーワードを入力">-->
+			<!--						<button class="btn btn-primary"><i class="bi bi-search"></i></button>-->
+			<!--					</div>-->
+			<!--					<a class="btn btn-danger" href="/tasks/add"><i class="bi bi-plus-lg"></i> 新規作成</a>-->
+			<!--				</div>-->
+			<!--			</form>-->
 
 			<table class="table">
 				<tr>
-					<th class="p-0 text-center"
-						th:classappend="${sort.equals('titleAsc') || sort.equals('titleDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('titleAsc') && !sort.equals('titleDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=titleAsc'"
+					<th class="p-0 text-center" th:classappend="${sort.equals('title') ? 'table-secondary' : '' }"
+						style="width:150px">
+						<th:block th:if="${!sort.equals('title')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'title'},direction = ${'asc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">タスク</a>
 						</th:block>
-						<th:block th:if="${sort.equals('titleAsc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=titleDesc'"
+						<th:block th:if="${sort.equals('title') && direction.equals('asc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'title'},direction = ${'desc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">タスク <i class="bi bi-caret-down-fill"></i></a>
 						</th:block>
-						<th:block th:if="${sort.equals('titleDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword}" class="link-dark d-block h-100 p-2">タスク <i
-									class="bi bi-caret-up-fill"></i></a>
+						<th:block th:if="${sort.equals('title') && direction.equals('desc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">タスク
+								<i class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
-					<th class="p-0 text-center"
-						th:classappend="${sort.equals('contentAsc') || sort.equals('contentDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('contentAsc') && !sort.equals('contentDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=contentAsc'"
+					<th class="p-0 text-center" th:classappend="${sort.equals('content') ? 'table-secondary' : '' }"
+						style="width:200px">
+						<th:block th:if="${!sort.equals('content')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'content'},direction = ${'asc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">内容</a>
 						</th:block>
-						<th:block th:if="${sort.equals('contentAsc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=contentDesc'"
+						<th:block th:if="${sort.equals('content') && direction.equals('asc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'content'},direction = ${'desc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">内容 <i class="bi bi-caret-down-fill"></i></a>
 						</th:block>
-						<th:block th:if="${sort.equals('contentDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword}" class="link-dark d-block h-100 p-2">内容 <i
-									class="bi bi-caret-up-fill"></i></a>
+						<th:block th:if="${sort.equals('content') && direction.equals('desc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">内容 <i class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
-					<th class="p-0 text-center"
-						th:classappend="${sort.equals('importantAsc') || sort.equals('importantDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('importantAsc') && !sort.equals('importantDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=importantAsc'"
+					<th class="p-0 text-center" th:classappend="${sort.equals('important') ? 'table-secondary' : '' }"
+						style="width:133px">
+						<th:block th:if="${!sort.equals('important')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'important'},direction = ${'asc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">重要度</a>
 						</th:block>
-						<th:block th:if="${sort.equals('importantAsc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=importantDesc'"
+						<th:block th:if="${sort.equals('important') && direction.equals('asc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'important'},direction = ${'desc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">重要度 <i class="bi bi-caret-down-fill"></i></a>
 						</th:block>
-						<th:block th:if="${sort.equals('importantDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword}" class="link-dark d-block h-100 p-2">重要度 <i
-									class="bi bi-caret-up-fill"></i></a>
+						<th:block th:if="${sort.equals('important') && direction.equals('desc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">重要度
+								<i class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
 					<th class="p-0 text-center"
-						th:classappend="${sort.equals('dueDatetimeAsc') || sort.equals('dueDatetimeDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('dueDatetimeAsc') && !sort.equals('dueDatetimeDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=dueDatetimeAsc'"
+						th:classappend="${sort.equals('dueDatetime') ? 'table-secondary' : '' }">
+						<th:block th:if="${!sort.equals('dueDatetime')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'dueDatetime'},direction = ${'asc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">期限</a>
 						</th:block>
-						<th:block th:if="${sort.equals('dueDatetimeAsc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=dueDatetimeDesc'"
+						<th:block th:if="${sort.equals('dueDatetime') && direction.equals('asc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'dueDatetime'},direction = ${'desc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">期限 <i class="bi bi-caret-down-fill"></i></a>
 						</th:block>
-						<th:block th:if="${sort.equals('dueDatetimeDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword}" class="link-dark d-block h-100 p-2">期限 <i
-									class="bi bi-caret-up-fill"></i></a>
+						<th:block th:if="${sort.equals('dueDatetime') && direction.equals('desc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">期限 <i class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
-					<th class="p-0 text-center"
-						th:classappend="${sort.equals('tagAsc') || sort.equals('tagDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('tagAsc') && !sort.equals('tagDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=tagAsc'"
+					<th class="p-0 text-center" th:classappend="${sort.equals('tag') ? 'table-secondary' : '' }">
+						<th:block th:if="${!sort.equals('tag')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'tag'},direction = ${'asc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">タグ</a>
 						</th:block>
-						<th:block th:if="${sort.equals('tagAsc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=tagDesc'"
+						<th:block th:if="${sort.equals('tag') && direction.equals('asc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'tag'},direction = ${'desc'}, maxCount=${maxCount})}"
 								class="link-dark d-block h-100 p-2">タグ <i class="bi bi-caret-down-fill"></i></a>
 						</th:block>
-						<th:block th:if="${sort.equals('tagDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword}" class="link-dark d-block h-100 p-2">タグ <i
-									class="bi bi-caret-up-fill"></i></a>
+						<th:block th:if="${sort.equals('tag') && direction.equals('desc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">タグ <i class="bi bi-caret-up-fill"></i></a>
+						</th:block>
+					</th>
+					<th class="p-0 text-center" th:classappend="${sort.equals('person') ? 'table-secondary' : '' }">
+						<th:block th:if="${!sort.equals('person')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'person'},direction = ${'asc'}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">作成者</a>
+						</th:block>
+						<th:block th:if="${sort.equals('person') && direction.equals('asc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'person'},direction = ${'desc'}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">作成者 <i class="bi bi-caret-down-fill"></i></a>
+						</th:block>
+						<th:block th:if="${sort.equals('person') && direction.equals('desc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">作成者
+								<i class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
 					<th class="p-0 text-center"
-						th:classappend="${sort.equals('personAsc') || sort.equals('personDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('personAsc') && !sort.equals('personDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=personAsc'" class="link-dark d-block h-100 p-2">作成者</a>
+						th:classappend="${sort.equals('createdDatetime') ? 'table-secondary' : '' }">
+						<th:block th:if="${!sort.equals('createdDatetime')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'createdDatetime'},direction = ${'asc'}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">作成日</a>
 						</th:block>
-						<th:block th:if="${sort.equals('personAsc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=personDesc'" class="link-dark d-block h-100 p-2">作成者 <i
-									class="bi bi-caret-down-fill"></i></a>
+						<th:block th:if="${sort.equals('createdDatetime') && direction.equals('asc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword},sort = ${'createdDatetime'},direction = ${'desc'}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">作成日 <i class="bi bi-caret-down-fill"></i></a>
 						</th:block>
-						<th:block th:if="${sort.equals('personDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword}" class="link-dark d-block h-100 p-2">作成者 <i
-									class="bi bi-caret-up-fill"></i></a>
-						</th:block>
-					</th>
-					<th class="p-0 text-center"
-						th:classappend="${sort.equals('createdDatetimeAsc') || sort.equals('createdDatetimeDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('createdDatetimeAsc') && !sort.equals('createdDatetimeDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=createdDatetimeAsc'" class="link-dark d-block h-100 p-2">作成日</a>
-						</th:block>
-						<th:block th:if="${sort.equals('createdDatetimeAsc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword} +'&sort=createdDatetimeDesc'" class="link-dark d-block h-100 p-2">作成日 <i
-									class="bi bi-caret-down-fill"></i></a>
-						</th:block>
-						<th:block th:if="${sort.equals('createdDatetimeDesc')}">
-							<a th:href="'/admin/tasks?keyword=' + ${keyword}" class="link-dark d-block h-100 p-2">作成日 <i
-									class="bi bi-caret-up-fill"></i></a>
+						<th:block th:if="${sort.equals('createdDatetime') && direction.equals('desc')}">
+							<a th:href="@{/admin/tasks(keyword = ${keyword}, maxCount=${maxCount})}"
+								class="link-dark d-block h-100 p-2">作成日
+								<i class="bi bi-caret-up-fill"></i></a>
 						</th:block>
 					</th>
 					<th></th>
 					<th></th>
 				</tr>
 				<tr th:each="task: ${tasks}">
-					<th:block th:if="${task.isCompleted == false && (task.title.contains(keyword) || task.content.contains(keyword))}">
+					<th:block
+						th:if="${task.isCompleted == false && (task.title.contains(keyword) || task.content.contains(keyword))}">
 						<td class="align-middle text-center">[[${task.title}]]</td>
 						<td class="align-middle text-center">[[${task.content}]]</td>
 						<td class="align-middle text-center">
@@ -179,6 +201,30 @@
 					</th:block>
 				</tr>
 			</table>
+
+			<nav aria-label="..." class="text-center">
+				<ul class="pagination justify-content-center">
+					<li class="page-item" th:classappend="${page.number == 0} ? 'disabled': ''">
+						<a class="page-link"
+							th:href="@{/admin/tasks(keyword = ${keyword},sort = ${sort},direction = ${direction},page = (${page.number} - 1), maxCount=${maxCount})}"
+							aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}"
+						th:classappend="${i == page.number } ? 'active': ''"><a class="page-link"
+							th:href="@{/admin/tasks(keyword = ${keyword},sort = ${sort},direction = ${direction},page = ${i}, maxCount=${maxCount})}"
+							th:text="${i + 1}"></a></li>
+
+					<li class="page-item" th:classappend="${page.number == page.totalPages -1} ? 'disabled': ''">
+						<a class="page-link"
+							th:href="@{/admin/tasks(keyword = ${keyword},sort = ${sort},direction = ${direction},page = (${page.number} + 1), maxCount=${maxCount})}"
+							aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
 
 	</main>
@@ -186,7 +232,18 @@
 	<footer th:replace="footer"></footer>
 
 	<script th:href="@{/webjars/jquery/3.6.0/js/jquery.min.js}"></script>
-	<script src="/js/script.js"></script>
+	<script th:src="@{/js/script.js}"></script>
+	<script>
+		window.onload = function () {
+			const selectElement = document.getElementById('max_count_select');
+
+			// select要素のchangeイベントリスナーを設定
+			selectElement.addEventListener('change', () => {
+				// フォームを送信
+				document.getElementById('max_count_form').submit();
+			});
+		}
+	</script>
 </body>
 
 </html>

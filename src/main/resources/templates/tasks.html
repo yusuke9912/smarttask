@@ -103,7 +103,8 @@
 						th:classappend="${sort.equals('tagAsc') || sort.equals('tagDesc')} ? 'table-secondary' : '' ">
 						<th:block th:if="${!sort.equals('tagAsc') && !sort.equals('tagDesc')}">
 							<a th:href="'/tasks?keyword=' + ${keyword} +'&sort=tagAsc'"
-								class="link-dark d-block h-100 p-2">タグ</a>
+								class="link-dark d-block h-100 p-2">
+								>タグ</a>
 						</th:block>
 						<th:block th:if="${sort.equals('tagAsc')}">
 							<a th:href="'/tasks?keyword=' + ${keyword} +'&sort=tagDesc'"
