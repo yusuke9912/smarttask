@@ -165,60 +165,56 @@
 
 				</tr>
 				<tr th:each="task: ${tasks}">
-					<th:block
-						th:if="${task.isCompleted == false && (task.title.contains(keyword) || task.content.contains(keyword))}">
-						<td class="align-middle text-center">[[${task.title}]]</td>
-						<td class="align-middle text-center">[[${task.content}]]</td>
-						<td class="align-middle text-center">[[${task.getDueDatetimeFormatted().substring(5)}]]</td>
-						<td class="align-middle text-center">
-							<span class="text-white rounded-pill py-1 px-2 small"
-								th:classappend="${task.tagId == 1 ? 'bg-danger' : (task.tagId == 2 ? 'bg-primary' : (task.tagId == 3 ? 'bg-success' : (task.tagId == 4 ? 'bg-warning' : 'bg-secondary')))}">
-								[[${task.tagName}]]
-							</span>
-						</td>
-						<td class="align-middle text-center" style="color:#FF8124">
-							<th:block th:each="i : ${#numbers.sequence(1,task.important)}">
-								★
-							</th:block>
-						</td>
-						<td class="align-middle text-center">
-							[[${task.personName}]]
-						</td>
-						<td class="align-middle text-center">
-							[[${task.createdDatetimeFormatted.substring(5)}]]
-						</td>
-						<td class="d-flex">
-							<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn btn-secondary me-2">
-								<i class="bi bi-pencil"></i>
-							</a>
-							<form th:action="'/tasks/' + ${task.id} + '/delete'" method="post">
-								<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-									data-bs-target="#exampleModal">
-									<i class="bi bi-trash"></i>
-								</button>
-								<!-- Modal -->
-								<div class="modal fade" id="exampleModal" tabindex="-1"
-									aria-labelledby="exampleModalLabel" aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalLabel">本当に削除しますか？</h5>
-												<button type="button" class="btn-close" data-bs-dismiss="modal"
-													aria-label="Close"></button>
-											</div>
+					<td class="align-middle text-center">[[${task.title}]]</td>
+					<td class="align-middle text-center">[[${task.content}]]</td>
+					<td class="align-middle text-center">[[${task.getDueDatetimeFormatted().substring(5)}]]</td>
+					<td class="align-middle text-center">
+						<span class="text-white rounded-pill py-1 px-2 small"
+							th:classappend="${task.tagId == 1 ? 'bg-danger' : (task.tagId == 2 ? 'bg-primary' : (task.tagId == 3 ? 'bg-success' : (task.tagId == 4 ? 'bg-warning' : 'bg-secondary')))}">
+							[[${task.tagName}]]
+						</span>
+					</td>
+					<td class="align-middle text-center" style="color:#FF8124">
+						<th:block th:each="i : ${#numbers.sequence(1,task.important)}">
+							★
+						</th:block>
+					</td>
+					<td class="align-middle text-center">
+						[[${task.personName}]]
+					</td>
+					<td class="align-middle text-center">
+						[[${task.createdDatetimeFormatted.substring(5)}]]
+					</td>
+					<td class="d-flex">
+						<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn btn-secondary me-2">
+							<i class="bi bi-pencil"></i>
+						</a>
+						<form th:action="'/tasks/' + ${task.id} + '/delete'" method="post">
+							<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+								data-bs-target="#exampleModal">
+								<i class="bi bi-trash"></i>
+							</button>
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">本当に削除しますか？</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
 
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary"
-													data-bs-dismiss="modal">キャンセル</button>
-												<button type="submit" class="btn btn-primary">削除</button>
-											</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">キャンセル</button>
+											<button type="submit" class="btn btn-primary">削除</button>
 										</div>
 									</div>
 								</div>
-							</form>
-						</td>
-
-					</th:block>
+							</div>
+						</form>
+					</td>
 				</tr>
 			</table>
 

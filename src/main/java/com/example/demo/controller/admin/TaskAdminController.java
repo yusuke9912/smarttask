@@ -37,7 +37,7 @@ public class TaskAdminController {
 
 		Sort sort1 = direction.equals("asc") ? Sort.by(Sort.Direction.ASC, sort) : Sort.by(Sort.Direction.DESC, sort);
 		Pageable pageable1 = PageRequest.of(pageable.getPageNumber(), maxCount, sort1);
-		Page<Task> taskPage = taskRepository.findAll(pageable1);
+		Page<Task> taskPage = taskRepository.findAllByIsCompleted(pageable1, false);
 
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("page", taskPage);

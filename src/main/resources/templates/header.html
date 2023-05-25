@@ -1,5 +1,5 @@
 <th:block th:if="${@account.name != null}">
-	<header class="py-3 mb-4 border-bottom bg-dark">
+	<header class="py-3 mb-4 border-bottom bg-primary">
 		<div class="container d-flex flex-wrap justify-content-center">
 			<th:block th:if="${@account.isAdmin}">
 				<a href="/admin/tasks"
@@ -28,7 +28,7 @@
 </th:block>
 
 <th:block th:if="${@account.name == null}">
-	<header class="py-3 mb-4 border-bottom bg-dark">
+	<header class="py-3 mb-4 border-bottom bg-primary">
 		<div class="container d-flex flex-wrap justify-content-center">
 			<a href="/tasks"
 				class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">

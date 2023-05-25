@@ -4,12 +4,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Person;
 import com.example.demo.entity.Tag;
@@ -36,72 +41,47 @@ public class TaskController {
 	@GetMapping("/tasks")
 	public String tasks(
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
-			@RequestParam(name = "sort", defaultValue = "") String sort,
+			@RequestParam(name = "sort", defaultValue = "id") String sort,
+			@RequestParam(name = "direction", defaultValue = "asc") String direction,
+			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			Pageable pageable,
 			Model model) {
-		
-		List<Task> taskList = null;
+
+		Sort sort1 = direction.equals("asc") ? Sort.by(Sort.Direction.ASC, sort) : Sort.by(Sort.Direction.DESC, sort);
+		Pageable pageable1 = PageRequest.of(pageable.getPageNumber(), maxCount, sort1);
 		Person person = personRepository.findById(account.getPersonId()).get();
-		
-		if (sort.isEmpty()) {
-			taskList = taskRepository.findAllByOrderByCreatedDatetimeAsc();
-		} else if (sort.equals("titleAsc")) {
-			taskList = taskRepository.findAllByOrderByTitleAsc();
-		} else if (sort.equals("contentAsc")) {
-			taskList = taskRepository.findAllByOrderByContentAsc();
-		} else if (sort.equals("importantAsc")) {
-			taskList = taskRepository.findAllByOrderByImportantAsc();
-		} else if (sort.equals("dueDatetimeAsc")) {
-			taskList = taskRepository.findAllByOrderByDueDatetimeAsc();
-		} else if (sort.equals("tagAsc")) {
-			taskList = taskRepository.findAllByOrderByTagAsc();
-		} else if (sort.equals("titleDesc")) {
-			taskList = taskRepository.findAllByOrderByTitleDesc();
-		} else if (sort.equals("contentDesc")) {
-			taskList = taskRepository.findAllByOrderByContentDesc();
-		} else if (sort.equals("importantDesc")) {
-			taskList = taskRepository.findAllByOrderByImportantDesc();
-		} else if (sort.equals("dueDatetimeDesc")) {
-			taskList = taskRepository.findAllByOrderByDueDatetimeDesc();
-		} else if (sort.equals("tagDesc")) {
-			taskList = taskRepository.findAllByOrderByTagDesc();
-		}
-		
+		Page<Task> taskPage = taskRepository.findAllByIsCompletedAndPerson(pageable1, false, person);
+
 		model.addAttribute("keyword", keyword);
-		model.addAttribute("tasks", taskList);
+		model.addAttribute("page", taskPage);
+		model.addAttribute("tasks", taskPage.getContent());
 		model.addAttribute("sort", sort);
+		model.addAttribute("direction", direction);
+		model.addAttribute("maxCount", maxCount);
 
 		return "tasks";
 	}
 
 	@GetMapping("/tasks/completed")
 	public String completedTasks(
-			@RequestParam(name = "sort", defaultValue = "") String sort,
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
+			@RequestParam(name = "sort", defaultValue = "id") String sort,
+			@RequestParam(name = "direction", defaultValue = "asc") String direction,
+			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			Pageable pageable,
 			Model model) {
 
-		List<Task> taskList = null;
+		Sort sort1 = direction.equals("asc") ? Sort.by(Sort.Direction.ASC, sort) : Sort.by(Sort.Direction.DESC, sort);
+		Pageable pageable1 = PageRequest.of(pageable.getPageNumber(), maxCount, sort1);
 		Person person = personRepository.findById(account.getPersonId()).get();
-		if (sort.isEmpty()) {
-			taskList = taskRepository.findAllByOrderByCreatedDatetimeAsc();
-		} else if (sort.equals("titleAsc")) {
-			taskList = taskRepository.findAllByOrderByTitleAsc();
-		} else if (sort.equals("contentAsc")) {
-			taskList = taskRepository.findAllByOrderByContentAsc();
-		} else if (sort.equals("importantAsc")) {
-			taskList = taskRepository.findAllByOrderByImportantAsc();
-		} else if (sort.equals("dueDatetimeAsc")) {
-			taskList = taskRepository.findAllByOrderByDueDatetimeAsc();
-		} else if (sort.equals("titleDesc")) {
-			taskList = taskRepository.findAllByOrderByTitleDesc();
-		} else if (sort.equals("contentDesc")) {
-			taskList = taskRepository.findAllByOrderByContentDesc();
-		} else if (sort.equals("importantDesc")) {
-			taskList = taskRepository.findAllByOrderByImportantDesc();
-		} else if (sort.equals("dueDatetimeDesc")) {
-			taskList = taskRepository.findAllByOrderByDueDatetimeDesc();
-		}
+		Page<Task> taskPage = taskRepository.findAllByIsCompletedAndPerson(pageable1, true, person);
 
-		model.addAttribute("tasks", taskList);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("page", taskPage);
+		model.addAttribute("tasks", taskPage.getContent());
 		model.addAttribute("sort", sort);
+		model.addAttribute("direction", direction);
+		model.addAttribute("maxCount", maxCount);
 
 		return "completedTasks";
 	}
@@ -179,37 +159,65 @@ public class TaskController {
 	}
 
 	@PostMapping("/tasks/{id}/delete")
-	public String delete(@PathVariable("id") Integer id, Model model) {
+	public String delete(
+			@PathVariable("id") Integer id,
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
+			@RequestParam(name = "sort", defaultValue = "id") String sort,
+			@RequestParam(name = "direction", defaultValue = "asc") String direction,
+			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			Pageable pageable,
+			Model model) {
 
 		taskRepository.deleteById(id);
 
 		if (account.getIsAdmin()) {
 			return "redirect:/admin/tasks";
 		} else {
-			return "redirect:/tasks";
+			return "redirect:/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		}
 	}
 
 	@PostMapping("/tasks/{id}/complete")
-	public String complete(@PathVariable("id") Integer id, Model model) {
+	public String complete(
+			@PathVariable("id") Integer id,
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
+			@RequestParam(name = "sort", defaultValue = "id") String sort,
+			@RequestParam(name = "direction", defaultValue = "asc") String direction,
+			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			Pageable pageable,
+			RedirectAttributes redirectAttributes) {
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 		taskRepository.setIsCompleted(id, true);
 
 		if (account.getIsAdmin()) {
 			return "redirect:/admin/tasks";
 		} else {
-			return "redirect:/tasks";
+			return "redirect:/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		}
 	}
 
 	@PostMapping("/tasks/{id}/incomplete")
-	public String incomplete(@PathVariable("id") Integer id, Model model) {
+	public String incomplete(
+			@PathVariable("id") Integer id,
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
+			@RequestParam(name = "sort", defaultValue = "id") String sort,
+			@RequestParam(name = "direction", defaultValue = "asc") String direction,
+			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			Pageable pageable,
+			Model model) {
 
 		taskRepository.setIsCompleted(id, false);
 
 		if (account.getIsAdmin()) {
 			return "redirect:/admin/tasks/completed";
 		} else {
-			return "redirect:/tasks/completed";
+			return "redirect:/tasks/completed?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		}
 	}
 }
