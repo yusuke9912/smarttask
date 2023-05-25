@@ -14,6 +14,10 @@
 	<main>
 		<div class="container">
 			<h4 class="text-center">タスク作成</h4>
+			<div class="text-center mt-4">
+				<button id="api-button" class="btn btn-danger"><i class="bi bi-chat-fill"></i> AIにタスクを考えてもらう</button>
+			</div>
+
 
 			<form action="/tasks/add" method="post">
 				<input type="hidden" name="personId" th:value="${@account.personId}">
@@ -22,14 +26,20 @@
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
 						<label>タスク名</label>
-						<input class="form-control" type="text" name="title" required>
+						<span class="spinner-grow text-danger d-none" role="status" id="spinner-title">
+							<span class="visually-hidden">Loading...</span>
+						</span>
+						<input class="form-control" type="text" name="title" required id="title">
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
 						<label>内容</label>
-						<input class="form-control" type="text" name="content">
+						<span class="spinner-grow text-danger d-none" role="status" id="spinner-content">
+							<span class="visually-hidden">Loading...</span>
+						</span>
+						<textarea class="form-control" type="text" name="content" id="content" rows="3"></textarea>
 					</div>
 				</div>
 
@@ -53,7 +63,7 @@
 						<input class="form-control" type="datetime-local" name="dueDatetime">
 					</div>
 				</div>
-				
+
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
 						<label>タグ</label>
@@ -74,7 +84,79 @@
 	</main>
 
 	<footer th:replace="footer"></footer>
+	<script>
+		window.onload = function () {
+			const spinnerTitle = document.getElementById("spinner-title");
+			const spinnerContent = document.getElementById("spinner-content");
+			const button = document.getElementById("api-button");
+			const title = document.getElementById("title");
+			const content = document.getElementById("content");
+			const apiKey = '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';
+			const endpoint = 'https://api.openai.com/v1/chat/completions';
 
+			button.addEventListener("click", async (event) => {
+				spinnerTitle.classList.remove('d-none');
+				event.preventDefault();
+
+				fetch(endpoint, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${apiKey}`
+					},
+					body: JSON.stringify({
+						messages: [
+							{"role": "system", "content": "日本語で答えてください"},
+							{"role": "system", "content": "20文字以内で答えてください"},
+							{"role": "system", "content": "回答の中に句読点や「」は使わないでください"},
+							{"role": "user", "content": "何か面白いチャレンジを20文字以内で提案してください"}],
+						model: "gpt-3.5-turbo",
+						max_tokens: 500,
+						temperature: 1,
+						n: 1,
+						stop: '###'
+					})
+				})
+					.then(response => response.json())
+					.then(data => {
+						console.log(data);
+						const text = data.choices[0].message.content;
+						title.value = text;
+						spinnerTitle.classList.add('d-none');
+						spinnerContent.classList.remove('d-none');
+						fetch(endpoint, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+								'Authorization': `Bearer ${apiKey}`
+							},
+							body: JSON.stringify({
+								messages: [
+									{"role": "system", "content": "日本語で答えてください"},
+									{"role": "system", "content": "20文字以内で答えてください"},
+									{"role": "user", "content": text + "に対して詳細を20文字以上30文字以内で簡潔に説明してください"}],
+								model: "gpt-3.5-turbo",
+								max_tokens: 500,
+								temperature: 1,
+								n: 1,
+								stop: '###'
+							})
+						})
+							.then(response => response.json())
+							.then(data => {
+								console.log(data);
+								const text = data.choices[0].message.content;
+								content.value = text;
+								spinnerContent.classList.add('d-none');
+							})
+							.catch(error => alert(error));
+					})
+					.catch(error => alert(error));
+
+
+			});
+		}
+	</script>
 </body>
 
 </html>
