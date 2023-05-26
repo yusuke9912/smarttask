@@ -54,17 +54,20 @@ public class TaskAdminController {
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
+			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
 			Pageable pageable,
 			Model model) {
 		
 		Sort sort1 = direction.equals("asc") ? Sort.by(Sort.Direction.ASC, sort) : Sort.by(Sort.Direction.DESC, sort);
-		Pageable pageable1 = PageRequest.of(pageable.getPageNumber(), 5, sort1);
-		Page<Task> taskPage = taskRepository.findAll(pageable1);
+		Pageable pageable1 = PageRequest.of(pageable.getPageNumber(), maxCount, sort1);
+		Page<Task> taskPage = taskRepository.findAllByIsCompleted(pageable1, true);
 
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("page", taskPage);
 		model.addAttribute("tasks", taskPage.getContent());
 		model.addAttribute("sort", sort);
 		model.addAttribute("direction", direction);
+		model.addAttribute("maxCount", maxCount);
 
 		return "admin/completedTasks";
 	}
