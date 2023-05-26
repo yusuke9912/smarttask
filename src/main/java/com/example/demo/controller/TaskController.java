@@ -58,6 +58,9 @@ public class TaskController {
 		model.addAttribute("sort", sort);
 		model.addAttribute("direction", direction);
 		model.addAttribute("maxCount", maxCount);
+		
+		LocalDateTime today = LocalDateTime.now();
+		model.addAttribute("today", today);
 
 		return "tasks";
 	}
