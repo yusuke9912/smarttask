@@ -1,4 +1,7 @@
 @charset "UTF-8";
+.complete-form{
+	width:35px;
+}
 
 .label__checkbox {
 	display: none;
@@ -25,10 +28,16 @@
 	color: transparent;
 	transition: opacity .3s .1s ease;
 	-webkit-text-stroke: 3px rgba(0, 0, 0, 0.2);
+	transition: -webkit-text-stroke .3s ease;
 }
 
 .label__check:hover {
-	border: 2px solid rgba(0, 0, 0, 0.5);
+	border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.label__check:hover i.icon {
+	-webkit-text-stroke: 3px rgba(0, 0, 0, 0.3);
+
 }
 
 .label__checkbox:checked+.label__text .label__check {

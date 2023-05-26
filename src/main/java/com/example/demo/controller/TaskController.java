@@ -188,7 +188,7 @@ public class TaskController {
 			RedirectAttributes redirectAttributes) {
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -211,6 +211,13 @@ public class TaskController {
 			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
 			Pageable pageable,
 			Model model) {
+		
+		try {
+			Thread.sleep(800);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 
 		taskRepository.setIsCompleted(id, false);
 

@@ -35,5 +35,31 @@ INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, du
 INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 5, '趣味の習い事', false, '新しい曲の練習', 2, '2023-06-01 00:00:00', '2023-5-20 00:00:00');
 INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 3, '美容院に行く', false, 'カットとカラーリング', 3, '2023-06-02 00:00:00', '2023-03-21 00:00:00');
 INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 4, 'プレゼントを購入', false, '友人の誕生日プレゼント', 5, '2023-06-03 00:00:00', '2023-05-11 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 2, '家の掃除をする2', false, '家の掃除を頑張る', 3, '2023-05-31 00:00:00', '2023-05-19 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 1, 'ヨガする2',  false, '赤坂に行く', 1, '2023-05-25 00:00:00', '2023-05-13 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 2, 'ジョギングする2',  false, 'ダイエットのため', 2, '2023-05-30 00:00:00', '2023-05-17 12:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 3, '夕飯を作る2',  false, 'カレーを作る', 3, '2023-05-29 00:00:00', '2023-05-14 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 1, 'メールを送る2',  false, '田中さんからのメールに返信する', 4, '2023-05-20 00:00:00', '2023-05-17 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 4, 'プログラミングの勉強をする2',  false, 'Swiftの勉強を頑張る', 5, '2023-05-29 00:00:00', '2023-05-18 01:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 4, '車の掃除をする2',  false, '早めに掃除', 4, '2023-05-31 00:00:00', '2023-05-01 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 2, '風呂の掃除をする2',  false, '風呂掃除めんどくさい', 1, '2023-05-18 00:00:00', '2023-05-17 16:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 5, 'クリーニングに出す2',  false, '忘れないでね', 2, '2023-06-01 00:00:00', '2023-05-18 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 3, '買い物に行く2', false, '食材をまとめて買う', 2, '2023-06-02 00:00:00', '2023-05-21 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 4, '報告書を書く2', false, 'プロジェクトの進捗をまとめる', 3, '2023-04-26 00:00:00', '2023-05-15 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 1, '友達とランチする2', false, '新しいカフェでランチ', 1, '2023-04-27 00:00:00', '2023-05-16 12:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 5, '散歩する2', false, '公園で散策', 4, '2023-05-30 00:00:00', '2023-05-22 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 3, 'プレゼン資料作成2', false, '来週のプレゼンのために資料作成', 5, '2023-05-28 00:00:00', '2023-05-23 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 2, '読書する2', false, '新刊を読む', 3, '2023-06-03 00:00:00', '2023-05-24 01:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 1, 'プランを立てる2', false, '来週の旅行のプランを考える', 2, '2023-06-04 00:00:00', '2023-05-22 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 5, '家具を買う2', false, '新しいソファを購入', 4, '2023-05-29 00:00:00', '2023-04-26 16:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 4, 'スポーツ観戦する2', false, '試合チケットを予約', 1, '2023-05-31 00:00:00', '2023-04-27 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 2, '家具の配置を変える2', false, 'リビングの模様替え', 5, '2023-06-01 00:00:00', '2023-04-26 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 1, '映画を観る2', false, '最新作を映画館で鑑賞', 3, '2023-06-02 00:00:00', '2023-05-24 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 3, '友達と遊ぶ2', false, 'カフェでおしゃべり', 2, '2023-05-30 00:00:00', '2023-05-02 12:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 4, 'プロジェクトミーティング2', false, '進捗報告と次回の計画立案', 4, '2023-06-03 00:00:00', '2023-05-09 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 2, '家族とディナー2', false, 'お気に入りのレストランで食事', 1, '2023-06-04 00:00:00', '2023-04-30 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(3, 5, '趣味の習い事2', false, '新しい曲の練習', 2, '2023-06-01 00:00:00', '2023-5-20 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(1, 3, '美容院に行く2', false, 'カットとカラーリング', 3, '2023-06-02 00:00:00', '2023-03-21 00:00:00');
+INSERT INTO tasks(person_id, tag_id, title, is_completed, content, important, due_datetime, created_datetime ) VALUES(2, 4, 'プレゼントを購入2', false, '友人の誕生日プレゼント', 5, '2023-06-03 00:00:00', '2023-05-11 00:00:00');
 
 

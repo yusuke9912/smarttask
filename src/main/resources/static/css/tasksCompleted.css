@@ -1,14 +1,18 @@
 @charset "UTF-8";
 
+.complete-form {
+	width: 35px;
+}
+
 .label__checkbox {
-	
+	display: none;
 }
 
 .label__check {
 	display: inline-block;
 	border-radius: 50%;
 	border: 2px solid rgba(0, 0, 0, 0.2);
-	background: #00d478;
+	background: white;
 	vertical-align: middle;
 	margin-right: 20px;
 	width: 2em;
@@ -18,13 +22,32 @@
 	align-items: center;
 	justify-content: center;
 	transition: border .3s ease;
+
+	width: 2em;
+	height: 2em;
+	background: #00d478;
+	border: 0;
+	opacity: 1;
 }
 
 .label__check i.icon {
 	font-size: calc(1rem + 0.5vw);
-	color: white;
+	color: transparent;
 	transition: opacity .3s .1s ease;
 	-webkit-text-stroke: 3px rgba(0, 0, 0, 0.2);
+	transition: -webkit-text-stroke .3s ease;
+
+	opacity: 1;
+	transform: scale(1);
+}
+
+.label__check:hover {
+	border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.label__check:hover i.icon {
+	-webkit-text-stroke: 3px rgba(0, 0, 0, 0.3);
+
 }
 
 .label__checkbox:checked+.label__text .label__check {
@@ -39,33 +62,38 @@
 	animation: icon .3s cubic-bezier(1.000, 0.008, 0.565, 1.650) .1s 1 forwards;
 }
 
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 @keyframes icon {
 	from {
-		opacity: 1;
-		transform: scale(1);
-	}
-
-	to {
 		opacity: 0;
 		transform: scale(0.3);
 	}
+
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
-@keyframes uncheck {
+@keyframes check {
 	0% {
-		width: 2em;
-		height: 2em;
-		background: #00d478;
-		border: 0;
-		opacity: 1;
+		width: 1.5em;
+		height: 1.5em;
+		border-width: 5px;
 	}
 
 	10% {
-		width: 2em;
-		height: 2em;
-		background: #00d478;
-		border: 0;
-		opacity: 0.6;
+		width: 1.5em;
+		height: 1.5em;
+		opacity: 0.1;
+		background: rgba(0, 0, 0, 0.2);
+		border-width: 15px;
 	}
 
 	12% {
@@ -77,17 +105,18 @@
 	}
 
 	50% {
-		width: 1.5em;
-		height: 1.5em;
-		opacity: 0.1;
-		background: rgba(0, 0, 0, 0.2);
-		border-width: 15px;
+		width: 2em;
+		height: 2em;
+		background: #00d478;
+		border: 0;
+		opacity: 0.6;
 	}
 
 	100% {
-		width: 1.5em;
-		height: 1.5em;
-		border-width: 5px;
-		background: white;
+		width: 2em;
+		height: 2em;
+		background: #00d478;
+		border: 0;
+		opacity: 1;
 	}
 }

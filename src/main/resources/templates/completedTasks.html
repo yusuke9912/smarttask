@@ -6,7 +6,8 @@
 	<title>TODO管理ツール</title>
 	<link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-	<link rel="stylesheet" type="text/css" href="/css/tasksCompleted.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/tasks.css">
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -225,6 +226,7 @@ bi-plus-lg"></i> 新規作成</a>
 				</ul>
 			</nav>
 		</div>
+		
 	</main>
 
 	<footer th:replace="footer"></footer>
@@ -247,7 +249,7 @@ bi-plus-lg"></i> 新規作成</a>
 
 			completeCheckboxElements.forEach((completeCheckboxElement, index) => {
 				completeCheckboxElement.addEventListener('change', () => {
-					completeCheckboxElement.checked = true;
+					completeCheckboxElement.checked = false;
 					completeFormElements[index].submit();
 
 				});
