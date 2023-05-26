@@ -16,12 +16,12 @@
 
 			<div>
 				<th:block th:if="${@account.isAdmin}">
-					<a class="btn btn-outline-light" href="/persons">ユーザー一覧</a>
+					<a class="btn btn-outline-light" href="/admin/persons">ユーザー一覧</a>
 				</th:block>
 				<th:block th:if="${!@account.isAdmin}">
 					<a class="btn btn-outline-light" href="/persons/edit">ユーザー情報変更</a>
 				</th:block>
-				<a class="btn btn-outline-light" href="/logout">ログアウト</a>
+				<a class="btn btn-light" href="/logout">ログアウト</a>
 			</div>
 		</div>
 	</header>

@@ -16,7 +16,7 @@
 			<div class="container d-flex flex-wrap justify-content-center mb-4">
 				<h4 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
 					ユーザー一覧</h4>
-				<a class="btn btn-danger" href="/persons/add"><i class="bi bi-plus-lg"></i> 新規作成</a>
+				<a class="btn btn-danger" href="/admin/persons/add"><i class="bi bi-plus-lg"></i> ユーザー作成</a>
 			</div>
 
 			<table class="table">
@@ -64,7 +64,6 @@
 						</th:block>
 					</th>
 					<th></th>
-					<th></th>
 				</tr>
 				<tr th:each="person: ${persons}">
 					<td class="align-middle text-center">[[${person.name}]]</td>
@@ -77,16 +76,36 @@
 							一般
 						</th:block>
 					</td>
-					<td>
-						<a th:href="'/persons/'+${person.id} + '/edit'" class="btn btn-secondary">
+					<td class="d-flex">
+						<a th:href="'/admin/persons/'+${person.id} + '/edit'" class="btn btn-secondary me-2">
 							<i class="bi bi-pencil"></i>
 						</a>
-					</td>
-					<td>
-						<form th:action="'/persons/' + ${person.id} + '/delete'" method="post">
-							<button class="btn btn-secondary">
+						<form th:action="'/admin/persons/' + ${person.id} + '/delete'" method="post">
+							<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+								th:data-bs-target="'#confirmModal' + ${person.id}">
 								<i class="bi bi-trash"></i>
 							</button>
+							<!-- Modal -->
+							<div class="modal fade" th:id="'confirmModal' + ${person.id}" tabindex="-1" aria-labelledby="confirmModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="confirmModalLabel">本当に削除しますか？</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<p>削除したユーザーは戻せません</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">キャンセル</button>
+											<button type="submit" class="btn btn-primary">削除</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</form>
 					</td>
 				</tr>
@@ -96,8 +115,10 @@
 	</main>
 
 	<footer th:replace="footer"></footer>
-
-	<script th:href="@{/webjars/jquery/3.6.0/js/jquery.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="/js/script.js"></script>
 </body>
 

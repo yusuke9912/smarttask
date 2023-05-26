@@ -12,6 +12,8 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 	
 	List<Person> findAllByOrderByIsAdminDesc();
 	
+	List<Person> findAllByOrderById();
+	 
 	boolean existsByEmail(String email);
 	Optional<Person> findByEmail(String email);
 	Optional<Person> findById(Integer id);

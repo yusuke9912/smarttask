@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,62 +72,6 @@ public class AccountController {
 			return "redirect:/admin/tasks";
 		} else {
 			return "redirect:/tasks";
-		}
-
-	}
-
-	@GetMapping("/account")
-	public String create() {
-		return "accountForm";
-	}
-
-	@PostMapping("/account")
-	public String store(
-			@RequestParam(name = "name", defaultValue = "") String name,
-			@RequestParam(name = "address", defaultValue = "") String address,
-			@RequestParam(name = "tel", defaultValue = "") String tel,
-			@RequestParam(name = "email", defaultValue = "") String email,
-			@RequestParam(name = "password", defaultValue = "") String password,
-			Model model) {
-
-		ArrayList<String> errors = new ArrayList<String>();
-
-		if (name.isEmpty()) {
-			errors.add("名前は必須です");
-		}
-
-		if (address.isEmpty()) {
-			errors.add("住所は必須です");
-		}
-
-		if (tel.isEmpty()) {
-			errors.add("電話番号は必須です");
-		}
-
-		if (email.isEmpty()) {
-			errors.add("メールアドレスは必須です");
-		}
-
-		if (personRepository.existsByEmail(email)) {
-			errors.add("登録済みのメールアドレスです");
-		}
-
-		if (password.isEmpty()) {
-			errors.add("パスワードは必須です");
-		}
-
-		model.addAttribute("name", name);
-		model.addAttribute("address", address);
-		model.addAttribute("tel", tel);
-		model.addAttribute("email", email);
-		model.addAttribute("errors", errors);
-
-		if (errors.isEmpty()) {
-			Person person = new Person(name, email, password);
-			personRepository.save(person);
-			return "redirect:/login";
-		} else {
-			return "accountForm";
 		}
 
 	}

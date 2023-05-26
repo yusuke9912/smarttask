@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="h-100">
+
+<head>
+	<meta charset="UTF-8">
+	<title>TODO管理ツール</title>
+	<link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="d-flex flex-column h-100">
+	<header th:replace="header"></header>
+	<main class="h-100">
+		<div class="container">
+			<h4 class="text-center">ユーザー情報変更</h4>
+
+			<p th:each="error:${errors}">
+				[[${error}]]
+			</p>
+
+			<form th:action="'/admin/persons/'+${person.id} + '/edit'" method="post" class="needs-validation" novalidate>
+				<div class="row justify-content-center">
+					<div class="col-5 my-3">
+						<label class="form-label">氏名</label>
+						<input class="form-control" type="text" name="name" th:value="${person.name}" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							氏名を入力してください
+						</div>
+					</div>
+				</div>
+
+				<div class="row justify-content-center">
+					<div class="col-5 my-3">
+						<label class="form-label">メールアドレス</label>
+						<input class="form-control" type="text" name="email" th:value="${person.email}" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							メールアドレスを入力してください
+						</div>
+					</div>
+				</div>
+
+				<div class="row justify-content-center">
+					<div class="col-5 my-3">
+						<label class="form-label">パスワード</label>
+						<input class="form-control" type="text" name="password" th:value="${person.password}" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							パスワードを入力してください
+						</div>
+					</div>
+				</div>
+				
+				<div class="row justify-content-center">
+					<div class="col-5 my-3">
+						<label class="form-label">ユーザー種別</label>
+						<select name="isAdmin" class="form-control" required>
+							<option value="false" th:selected="${!person.isAdmin}">一般</option>
+							<option value="true" th:selected="${person.isAdmin}">管理者</option>
+						</select>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							ユーザー種別を選択してください
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="row justify-content-center">
+					<div class="col-5 my-3">
+						<button class="btn btn-primary w-100">変更</button>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</main>
+
+	<footer th:replace="footer"></footer>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="/js/script.js"></script>
+
+</body>
+
+</html>
