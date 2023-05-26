@@ -1,0 +1,45 @@
+body{
+	 background-color: #fcfcff;
+	 position:relative
+}
+
+#pika-img1 {
+	top: 150px;
+	left: 80px;
+	height: 250px;
+	transform: scale(-1, 1);
+}
+
+#pika-img2 {
+	top: 150px;
+	right: 80px;
+	height: 250px;
+}
+
+#pika-img3 {
+	bottom: 150px;
+	right: 0px;
+	height: 250px;
+	transform: scale(-1, 1);
+}
+
+#pika-img4 {
+	bottom: 550px;
+	left: 30px;
+	height: 250px;
+	transform: scale(-1, 1);
+}
+
+#pika-img5 {
+	bottom: 150px;
+	right: 0px;
+	height: 250px;
+
+}
+
+#pika-img6 {
+	bottom: 340px;
+	left: 30px;
+	height: 250px;
+
+}

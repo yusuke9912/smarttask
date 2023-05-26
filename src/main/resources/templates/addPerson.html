@@ -5,13 +5,16 @@
 	<meta charset="UTF-8">
 	<title>TODO管理ツール</title>
 	<link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body class="d-flex flex-column h-100">
+	<img src="/image/pika.gif" class="position-absolute" id="pika-img1">
+	<img src="/image/pika.gif" class="position-absolute" id="pika-img2">
 	<header th:replace="header"></header>
 	<main class="h-100">
 		<div class="container">
-			<h4 class="text-center">新規登録</h4>
+			<h3 class="text-center mt-4">新規登録</h3>
 
 			<form action="/persons/add" method="post" class="needs-validation" novalidate>
 				<div class="row justify-content-center">
