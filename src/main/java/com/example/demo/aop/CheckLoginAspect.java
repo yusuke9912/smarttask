@@ -14,7 +14,7 @@ public class CheckLoginAspect {
 	@Autowired
 	Account account;
 
-	@Around("execution(* com.example.demo.controller.TaskController.*(..))")
+	@Around("execution(* com.example.demo.controller.TaskController.*(..)) || execution(* com.example.demo.controller.admin.TaskAdminController.*(..))")
 	public Object checkLogin(ProceedingJoinPoint jp) throws Throwable {
 		if (account == null || account.getName() == null || account.getName().length() == 0) {
 			return "redirect:/";
@@ -22,4 +22,6 @@ public class CheckLoginAspect {
 		return jp.proceed();
 
 	}
+	
+	
 }
