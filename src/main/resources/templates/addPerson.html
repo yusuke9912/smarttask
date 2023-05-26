@@ -13,31 +13,44 @@
 		<div class="container">
 			<h4 class="text-center">新規登録</h4>
 
-			<p th:each="error:${errors}">
-				[[${error}]]
-			</p>
-
-			<form action="/persons/add" method="post">
+			<form action="/persons/add" method="post" class="needs-validation" novalidate>
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
-						<label>お名前</label>
-						<input class="form-control" type="text" name="name" th:value="${name}">
+						<label class="form-label">氏名</label>
+						<input class="form-control" type="text" name="name" th:value="${name}" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							氏名を入力してください
+						</div>
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
-						<label>メールアドレス</label>
-						<input class="form-control" type="text" name="email" th:value="${email}">
+						<label class="form-label">メールアドレス</label>
+						<input class="form-control" type="text" name="email" th:value="${email}" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							メールアドレスを入力してください
+						</div>
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
-						<label>パスワード</label>
-						<input class="form-control" type="text" name="password">
+						<label class="form-label">パスワード</label>
+						<input class="form-control" type="text" name="password" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							パスワードを入力してください
+						</div>
 					</div>
 				</div>
+
+				<p th:each="error:${errors}" class="text-danger text-center">
+					[[${error}]]
+				</p>
+
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<button class="btn btn-primary w-100">登録</button>
@@ -49,6 +62,8 @@
 	</main>
 
 	<footer th:replace="footer"></footer>
+
+	<script src="/js/script.js"></script>
 </body>
 
 </html>

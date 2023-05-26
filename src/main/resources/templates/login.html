@@ -14,22 +14,30 @@
 		<div class="container">
 			<h4 class="text-center">ログイン</h4>
 
-			<p th:text="${message}" style="color: red"></p>
-
-			<form action="/login" method="post">
+			<form action="/login" method="post" class="needs-validation" novalidate>
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
-						<label>メールアドレス</label>
+						<label class="form-label">メールアドレス</label>
 						<input class="form-control" type="text" name="email" th:value="${email}" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							メールアドレスを入力してください
+						</div>
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
-						<label>パスワード</label>
+						<label class="form-label">パスワード</label>
 						<input class="form-control" type="text" name="password" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							パスワードを入力してください
+						</div>
 					</div>
 				</div>
+
+				<p th:text="${message}" class="text-danger text-center"></p>
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<button class="btn btn-primary w-100">ログイン</button>
@@ -46,6 +54,8 @@
 	</main>
 
 	<footer th:replace="footer"></footer>
+	<script src="/js/script.js"></script>
+
 </body>
 
 </html>

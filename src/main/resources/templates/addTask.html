@@ -19,33 +19,42 @@
 			</div>
 
 
-			<form action="/tasks/add" method="post">
+			<form action="/tasks/add" method="post" class="needs-validation" novalidate>
 				<input type="hidden" name="personId" th:value="${@account.personId}">
 				<input type="hidden" name="isCompleted" th:value="false">
 
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
-						<label>タスク名</label>
+						<label class="form-label">タスク名</label>
 						<span class="spinner-grow text-danger d-none" role="status" id="spinner-title">
 							<span class="visually-hidden">Loading...</span>
 						</span>
-						<input class="form-control" type="text" name="title" required id="title">
+						<input class="form-control" type="text" name="title" id="title" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							タスク名を入力してください
+						</div>
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
-						<label>内容</label>
+						<label class="form-label">内容</label>
 						<span class="spinner-grow text-danger d-none" role="status" id="spinner-content">
 							<span class="visually-hidden">Loading...</span>
 						</span>
-						<textarea class="form-control" type="text" name="content" id="content" rows="3"></textarea>
+						<textarea class="form-control" type="text" name="content" id="content" rows="3"
+							required></textarea>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							内容を入力してください
+						</div>
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
-						<label>重要度</label>
+						<label class="form-label">重要度</label>
 						<select name="important" class="form-control" required>
 							<option value="">選択してください</option>
 							<option th:each="i : ${#numbers.sequence(1,5)}" th:value="${i}">
@@ -54,23 +63,35 @@
 								</th:block>
 							</option>
 						</select>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							重要度を選択してください
+						</div>
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
-						<label>期限日</label>
-						<input class="form-control" type="datetime-local" name="dueDatetime">
+						<label class="form-label">期限日</label>
+						<input class="form-control" type="datetime-local" name="dueDatetime" required>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							期限日を選択してください
+						</div>
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
 					<div class="col-5 my-3">
-						<label>タグ</label>
+						<label class="form-label">タグ</label>
 						<select name="tagId" class="form-control" required>
 							<option value="">選択してください</option>
 							<option th:each="tag: ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
 						</select>
+						<div class="valid-feedback">OK!</div>
+						<div class="invalid-feedback">
+							タグを選択してください
+						</div>
 					</div>
 				</div>
 
@@ -84,6 +105,7 @@
 	</main>
 
 	<footer th:replace="footer"></footer>
+	<script src="/js/script.js"></script>
 	<script>
 		window.onload = function () {
 			const spinnerTitle = document.getElementById("spinner-title");

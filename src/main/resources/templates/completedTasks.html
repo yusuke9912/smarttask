@@ -189,7 +189,9 @@ bi-plus-lg"></i> 新規作成</a>
 											<button type="button" class="btn-close" data-bs-dismiss="modal"
 												aria-label="Close"></button>
 										</div>
-
+										<div class="modal-body">
+											<p>削除したタスクは戻せません</p>
+										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary"
 												data-bs-dismiss="modal">キャンセル</button>
@@ -235,29 +237,7 @@ bi-plus-lg"></i> 新規作成</a>
 		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
 		crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-		window.onload = function () {
-			const selectElement = document.getElementById('max_count_select');
-
-			// select要素のchangeイベントリスナーを設定
-			selectElement.addEventListener('change', () => {
-				// フォームを送信
-				document.getElementById('max_count_form').submit();
-			});
-
-			const completeCheckboxElements = Array.from(document.getElementsByClassName('complete-checkbox'));
-			const completeFormElements = document.getElementsByClassName('complete-form');
-
-			completeCheckboxElements.forEach((completeCheckboxElement, index) => {
-				completeCheckboxElement.addEventListener('change', () => {
-					completeCheckboxElement.checked = false;
-					completeFormElements[index].submit();
-
-				});
-			}
-			)
-		}
-	</script>
+	<script src="/js/script.js"></script>
 </body>
 
 </html>
