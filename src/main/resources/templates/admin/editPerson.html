@@ -14,13 +14,20 @@
 		<div class="container">
 			<img src="/image/pika.gif" class="position-absolute" id="pika-img1">
 			<img src="/image/pika.gif" class="position-absolute" id="pika-img2">
+			<div class="row justify-content-center">
+				<div class="col-4 my-3">
+					<canvas id="sushi_circle" width="200" height="500"></canvas>
+				</div>
+			</div>
+			
 			<h3 class="text-center">ユーザー情報変更</h3>
 
 			<p th:each="error:${errors}">
 				[[${error}]]
 			</p>
 
-			<form th:action="'/admin/persons/'+${person.id} + '/edit'" method="post" class="needs-validation" novalidate>
+			<form th:action="'/admin/persons/'+${person.id} + '/edit'" method="post" class="needs-validation"
+				novalidate>
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<label class="form-label">氏名</label>
@@ -53,7 +60,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<label class="form-label">ユーザー種別</label>
@@ -67,8 +74,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<button class="btn btn-primary w-100">変更</button>
@@ -84,7 +91,26 @@
 		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
 		crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1"></script>
 	<script src="/js/script.js"></script>
+	<script th:inline="javascript">
+		window.onload = function () {
+			let context = document.querySelector("#sushi_circle").getContext('2d')
+			new Chart(context, {
+				type: 'doughnut',
+				data: {
+					labels: [ "仕事", "家庭", "交際", "趣味", "その他" ],
+					datasets: [{
+						data: /*[[ ${data} ]]*/,
+						backgroundColor: ["#fa8072", "#00ff7f", "#00bfff", "#a9a9a9", "#f5f5f5"],
+					}]
+				},
+				options: {
+					responsive: false,
+				}
+			});
+		}
+	</script>
 
 </body>
 

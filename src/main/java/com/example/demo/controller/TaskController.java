@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,7 +45,7 @@ public class TaskController {
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
-			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
 			Pageable pageable,
 			Model model) {
 
@@ -58,7 +60,7 @@ public class TaskController {
 		model.addAttribute("sort", sort);
 		model.addAttribute("direction", direction);
 		model.addAttribute("maxCount", maxCount);
-		
+
 		LocalDateTime today = LocalDateTime.now();
 		model.addAttribute("today", today);
 
@@ -70,7 +72,7 @@ public class TaskController {
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
-			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
 			Pageable pageable,
 			Model model) {
 
@@ -167,14 +169,14 @@ public class TaskController {
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
-			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
 			Pageable pageable,
 			Model model) {
 
 		taskRepository.deleteById(id);
 
 		if (account.getIsAdmin()) {
-			return "redirect:/admin/tasks";
+			return "redirect:/admin/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		} else {
 			return "redirect:/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		}
@@ -186,10 +188,10 @@ public class TaskController {
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
-			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
 			Pageable pageable,
 			RedirectAttributes redirectAttributes) {
-		
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -199,7 +201,7 @@ public class TaskController {
 		taskRepository.setIsCompleted(id, true);
 
 		if (account.getIsAdmin()) {
-			return "redirect:/admin/tasks";
+			return "redirect:/admin/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		} else {
 			return "redirect:/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		}
@@ -211,10 +213,10 @@ public class TaskController {
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
-			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
 			Pageable pageable,
 			Model model) {
-		
+
 		try {
 			Thread.sleep(800);
 		} catch (InterruptedException e) {
@@ -225,7 +227,7 @@ public class TaskController {
 		taskRepository.setIsCompleted(id, false);
 
 		if (account.getIsAdmin()) {
-			return "redirect:/admin/tasks/completed";
+			return "redirect:/admin/tasks/completed?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		} else {
 			return "redirect:/tasks/completed?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		}

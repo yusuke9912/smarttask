@@ -71,7 +71,9 @@ public class PersonAdminController {
 
 		Person person = personRepository.findById(id).get();
 
+
 		model.addAttribute("person", person);
+
 
 		return "admin/editPerson";
 	}

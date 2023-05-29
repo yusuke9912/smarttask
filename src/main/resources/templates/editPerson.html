@@ -10,10 +10,11 @@
 
 <body class="d-flex flex-column h-100">
 	<header th:replace="header"></header>
-	<main class="h-100">
+	<main class="flex-shrink-0">
 		<div class="container">
 			<img src="/image/pika.gif" class="position-absolute" id="pika-img1">
 			<img src="/image/pika.gif" class="position-absolute" id="pika-img2">
+
 			<h3 class="text-center">ユーザー情報変更</h3>
 
 			<p th:each="error:${errors}">
@@ -24,7 +25,7 @@
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<label class="form-label">氏名</label>
-						<input class="form-control" type="text" name="name" th:value="${name}" required>
+						<input class="form-control" type="text" name="name" th:value="${person.name}" required>
 						<div class="valid-feedback">OK!</div>
 						<div class="invalid-feedback">
 							氏名を入力してください
@@ -35,7 +36,7 @@
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<label class="form-label">メールアドレス</label>
-						<input class="form-control" type="text" name="email" th:value="${email}" required>
+						<input class="form-control" type="text" name="email" th:value="${person.email}" required>
 						<div class="valid-feedback">OK!</div>
 						<div class="invalid-feedback">
 							メールアドレスを入力してください
@@ -46,7 +47,7 @@
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<label class="form-label">パスワード</label>
-						<input class="form-control" type="text" name="password" th:value="${password}" required>
+						<input class="form-control" type="text" name="password" th:value="${person.password}" required>
 						<div class="valid-feedback">OK!</div>
 						<div class="invalid-feedback">
 							パスワードを入力してください
@@ -98,7 +99,9 @@
 		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
 		crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 	<script src="/js/script.js"></script>
+
 
 </body>
 

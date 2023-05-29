@@ -16,7 +16,7 @@
 
 	<main class="flex-shrink-0">
 		<div class="container">
-			
+
 			<div class="d-flex justify-content-between align-items-center mt-2 mb-4">
 				<h3>タスク一覧</h3>
 
@@ -42,7 +42,7 @@
 
 			</div>
 
-			<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs mt-5">
 				<li class="nav-item">
 					<a href="/tasks" class="nav-link active">未完了</a>
 				</li>
@@ -163,7 +163,10 @@
 					</td>
 					<td class="align-middle text-center">[[${task.title}]]</td>
 					<td class="align-middle text-center">[[${task.content}]]</td>
-					<td class="align-middle text-center" th:classappend="${task.dueDatetime.isBefore(today) ? 'text-danger h6': ''}">[[${task.getDueDatetimeFormatted().substring(5)}]]</td>
+					<td class="align-middle text-center"
+						th:classappend="${task.dueDatetime.isBefore(today) ? 'text-danger h6': ''}">
+						[[${task.getDueDatetimeFormatted().substring(5)}]]
+					</td>
 					<td class="align-middle text-center">
 						<span class="text-white rounded-pill py-1 px-2 small"
 							th:classappend="${task.tagId == 1 ? 'bg-danger' : (task.tagId == 2 ? 'bg-primary' : (task.tagId == 3 ? 'bg-success' : (task.tagId == 4 ? 'bg-warning' : 'bg-secondary')))}">
@@ -175,18 +178,21 @@
 							★
 						</th:block>
 					</td>
-					<td class="d-flex">
-						<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn btn-secondary me-2">
-							<i class="bi bi-pencil"></i>
+					<td class="d-flex justify-content-end">
+						<a th:href="'/tasks/'+${task.id} + '/edit'" class="btn text-secondary">
+							<i class="bi bi-pencil-fill h5"></i>
 						</a>
 						<form th:action="'/tasks/' + ${task.id} + '/delete'" method="post">
-							<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-								data-bs-target="#exampleModal">
-								<i class="bi bi-trash"></i>
+							<input type="hidden" name="sort" th:value="${sort}">
+							<input type="hidden" name="direction" th:value="${direction}">
+							<input type="hidden" name="maxCount" th:value="${maxCount}">
+							<button type="button" class="btn text-secondary" data-bs-toggle="modal"
+								th:data-bs-target="'#confirmModal' + ${task.id}">
+								<i class="bi bi-trash-fill h5"></i>
 							</button>
 							<!-- Modal -->
-							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-								aria-hidden="true">
+							<div class="modal fade" th:id="'confirmModal' + ${task.id}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -210,7 +216,7 @@
 				</tr>
 			</table>
 
-			<nav aria-label="..." class="text-center">
+			<nav aria-label="..." class="text-center my-5">
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${page.number == 0} ? 'disabled': ''">
 						<a class="page-link"

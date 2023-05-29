@@ -1,5 +1,7 @@
 package com.example.demo.controller.admin;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +33,7 @@ public class TaskAdminController {
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
-			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
 			Pageable pageable,
 			Model model) {
 
@@ -45,6 +47,9 @@ public class TaskAdminController {
 		model.addAttribute("sort", sort);
 		model.addAttribute("direction", direction);
 		model.addAttribute("maxCount", maxCount);
+		
+		LocalDateTime today = LocalDateTime.now();
+		model.addAttribute("today", today);
 
 		return "admin/tasks";
 	}
@@ -54,7 +59,7 @@ public class TaskAdminController {
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
-			@RequestParam(name = "maxCount", defaultValue = "5") Integer maxCount,
+			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
 			Pageable pageable,
 			Model model) {
 		
