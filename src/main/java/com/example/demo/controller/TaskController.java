@@ -230,4 +230,33 @@ public class TaskController {
 			return "redirect:/tasks/completed?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
 		}
 	}
+
+	@GetMapping("/tasks/status")
+	public String update(Model model) {
+
+		Person person = personRepository.findById(account.getPersonId()).get();
+
+		List<String> list = taskRepository.getCountByTag(person);
+		Map<String, String> map1 = new HashMap<>();
+		for (String elem : list) {
+			String[] test = elem.split(",");
+			map1.put(test[0], test[1]);
+
+		}
+
+		List<String> list2 = taskRepository.getCountByIsCompleted(person);
+		Map<String, String> map2 = new HashMap<>();
+		for (String elem : list2) {
+			String[] test = elem.split(",");
+			map2.put(test[0], test[1]);
+
+		}
+
+		model.addAttribute("person", person);
+		model.addAttribute("map1", map1);
+		model.addAttribute("map2", map2);
+
+		return "tasksStatus";
+
+	}
 }

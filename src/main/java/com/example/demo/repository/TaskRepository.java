@@ -29,4 +29,12 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	Page<Task> findAllByIsCompleted(Pageable pageable, Boolean isCompleted);
 	
 	Page<Task> findAllByIsCompletedAndPerson(Pageable pageable, Boolean isCompleted, Person person);
+	
+	@Transactional
+	@Query("select t.tag.name, count(t) from Task t where t.person = :person group by t.tag.name")
+	public  List<String> getCountByTag(Person person);
+	
+	@Transactional
+	@Query("select t.isCompleted, count(t) from Task t where t.person = :person group by t.isCompleted")
+	public  List<String> getCountByIsCompleted(Person person);
 }
