@@ -22,6 +22,7 @@
 			</p>
 
 			<form action="/persons/edit" method="post" class="needs-validation" novalidate>
+				<input type="hidden" name="createdDatetime" th:value="${person.createdDatetime}">
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<label class="form-label">氏名</label>

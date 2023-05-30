@@ -12,105 +12,133 @@
 <body class="d-flex flex-column h-100">
 	<header th:replace="header"></header>
 
-	<main class="h-100">
+	<main class="flex-shrink-0">
 		<div class="container">
-			<div class="container d-flex flex-wrap justify-content-center mb-4">
-				<h3 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
-					ユーザー一覧</h3>
-				<a class="btn btn-danger" href="/admin/persons/add"><i class="bi bi-plus-lg"></i> ユーザー作成</a>
+			<div class="container d-flex flex-wrap justify-content-between mb-4">
+				<h3>ユーザー一覧</h3>
+				<a class="btn btn-primary" href="/admin/persons/add"><i class="bi bi-plus-lg"></i> ユーザー作成</a>
 			</div>
+			<div class="row justify-content-center">
+				<div class="col-8">
+					<table class="table mt-5">
+						<tr>
+							<th class="p-0 text-center"
+								th:classappend="${sort.equals('name') ? 'table-secondary' : '' }">
+								<th:block th:if="${!sort.equals('name')}">
+									<a th:href="@{/admin/persons(sort = ${'name'},direction = ${'asc'})}"
+										class="link-dark d-block h-100 p-2">名前</a>
+								</th:block>
+								<th:block th:if="${sort.equals('name') && direction.equals('asc')}">
+									<a th:href="@{/admin/persons(sort = ${'name'},direction = ${'desc'})}"
+										class="link-dark d-block h-100 p-2">名前 <i class="bi bi-caret-down-fill"></i></a>
+								</th:block>
+								<th:block th:if="${sort.equals('name') && direction.equals('desc')}">
+									<a href="/admin/persons" class="link-dark d-block h-100 p-2">名前 <i
+											class="bi bi-caret-up-fill"></i></a>
+								</th:block>
+							</th>
+							<th class="p-0 text-center"
+								th:classappend="${sort.equals('email') ? 'table-secondary' : '' }">
+								<th:block th:if="${!sort.equals('email')}">
+									<a th:href="@{/admin/persons(sort = ${'email'},direction = ${'asc'})}"
+										class="link-dark d-block h-100 p-2">メールアドレス</a>
+								</th:block>
+								<th:block th:if="${sort.equals('email') && direction.equals('asc')}">
+									<a th:href="@{/admin/persons(sort = ${'email'},direction = ${'desc'})}"
+										class="link-dark d-block h-100 p-2">メールアドレス <i
+											class="bi bi-caret-down-fill"></i></a>
+								</th:block>
+								<th:block th:if="${sort.equals('email') && direction.equals('desc')}">
+									<a href="/admin/persons" class="link-dark d-block h-100 p-2">メールアドレス <i
+											class="bi bi-caret-up-fill"></i></a>
+								</th:block>
+							</th>
 
-			<table class="table">
-				<tr>
-					<th class="p-0 text-center"
-						th:classappend="${sort.equals('nameAsc') || sort.equals('nameDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('nameAsc') && !sort.equals('nameDesc')}">
-							<a href="/persons?sort=nameAsc" class="link-dark d-block h-100 p-2">名前</a>
-						</th:block>
-						<th:block th:if="${sort.equals('nameAsc')}">
-							<a href="/persons?sort=nameDesc" class="link-dark d-block h-100 p-2">名前 <i
-									class="bi bi-caret-down-fill"></i></a>
-						</th:block>
-						<th:block th:if="${sort.equals('nameDesc')}">
-							<a href="/persons" class="link-dark d-block h-100 p-2">名前 <i
-									class="bi bi-caret-up-fill"></i></a>
-						</th:block>
-					</th>
-					<th class="p-0 text-center"
-						th:classappend="${sort.equals('nameAsc') || sort.equals('nameDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('nameAsc') && !sort.equals('nameDesc')}">
-							<a href="/persons?sort=nameAsc" class="link-dark d-block h-100 p-2">メールアドレス</a>
-						</th:block>
-						<th:block th:if="${sort.equals('nameAsc')}">
-							<a href="/persons?sort=nameDesc" class="link-dark d-block h-100 p-2">メールアドレス <i
-									class="bi bi-caret-down-fill"></i></a>
-						</th:block>
-						<th:block th:if="${sort.equals('nameDesc')}">
-							<a href="/persons" class="link-dark d-block h-100 p-2">メールアドレス <i
-									class="bi bi-caret-up-fill"></i></a>
-						</th:block>
-					</th>
-					<th class="p-0 text-center"
-						th:classappend="${sort.equals('isAdminAsc') || sort.equals('isAdminDesc')} ? 'table-secondary' : '' ">
-						<th:block th:if="${!sort.equals('isAdminAsc') && !sort.equals('isAdminDesc')}">
-							<a href="/persons?sort=isAdminAsc" class="link-dark d-block h-100 p-2">ユーザー種別</a>
-						</th:block>
-						<th:block th:if="${sort.equals('isAdminAsc')}">
-							<a href="/persons?sort=isAdminDesc" class="link-dark d-block h-100 p-2">ユーザー種別 <i
-									class="bi bi-caret-down-fill"></i></a>
-						</th:block>
-						<th:block th:if="${sort.equals('isAdminDesc')}">
-							<a href="/persons" class="link-dark d-block h-100 p-2">ユーザー種別 <i
-									class="bi bi-caret-up-fill"></i></a>
-						</th:block>
-					</th>
-					<th></th>
-				</tr>
-				<tr th:each="person: ${persons}">
-					<td class="align-middle text-center">[[${person.name}]]</td>
-					<td class="align-middle text-center">[[${person.email}]]</td>
-					<td class="align-middle text-center">
-						<th:block th:if="${person.isAdmin}">
-							管理者
-						</th:block>
-						<th:block th:if="${!person.isAdmin}">
-							一般
-						</th:block>
-					</td>
-					<td class="d-flex">
-						<a th:href="'/admin/persons/'+${person.id} + '/edit'" class="btn btn-secondary me-2">
-							<i class="bi bi-pencil"></i>
-						</a>
-						<form th:action="'/admin/persons/' + ${person.id} + '/delete'" method="post">
-							<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-								th:data-bs-target="'#confirmModal' + ${person.id}">
-								<i class="bi bi-trash"></i>
-							</button>
-							<!-- Modal -->
-							<div class="modal fade" th:id="'confirmModal' + ${person.id}" tabindex="-1" aria-labelledby="confirmModalLabel"
-								aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="confirmModalLabel">本当に削除しますか？</h5>
-											<button type="button" class="btn-close" data-bs-dismiss="modal"
-												aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<p>削除したユーザーは戻せません</p>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">キャンセル</button>
-											<button type="submit" class="btn btn-primary">削除</button>
+							<th class="p-0 text-center"
+								th:classappend="${sort.equals('isAdmin') ? 'table-secondary' : '' }">
+								<th:block th:if="${!sort.equals('isAdmin')}">
+									<a th:href="@{/admin/persons(sort = ${'isAdmin'},direction = ${'asc'})}"
+										class="link-dark d-block h-100 p-2">ユーザー種別</a>
+								</th:block>
+								<th:block th:if="${sort.equals('isAdmin') && direction.equals('asc')}">
+									<a th:href="@{/admin/persons(sort = ${'isAdmin'},direction = ${'desc'})}"
+										class="link-dark d-block h-100 p-2">ユーザー種別 <i
+											class="bi bi-caret-down-fill"></i></a>
+								</th:block>
+								<th:block th:if="${sort.equals('isAdmin') && direction.equals('desc')}">
+									<a href="/admin/persons" class="link-dark d-block h-100 p-2">ユーザー種別 <i
+											class="bi bi-caret-up-fill"></i></a>
+								</th:block>
+							</th>
+							<th class="p-0 text-center"
+								th:classappend="${sort.equals('createdDatetime') ? 'table-secondary' : '' }">
+								<th:block th:if="${!sort.equals('createdDatetime')}">
+									<a th:href="@{/admin/persons(sort = ${'createdDatetime'},direction = ${'asc'})}"
+										class="link-dark d-block h-100 p-2">作成日</a>
+								</th:block>
+								<th:block th:if="${sort.equals('createdDatetime') && direction.equals('asc')}">
+									<a th:href="@{/admin/persons(sort = ${'createdDatetime'},direction = ${'desc'})}"
+										class="link-dark d-block h-100 p-2">作成日 <i
+											class="bi bi-caret-down-fill"></i></a>
+								</th:block>
+								<th:block th:if="${sort.equals('createdDatetime') && direction.equals('desc')}">
+									<a href="/admin/persons" class="link-dark d-block h-100 p-2">作成日 <i
+											class="bi bi-caret-up-fill"></i></a>
+								</th:block>
+							</th>
+							<th></th>
+						</tr>
+						<tr th:each="person: ${persons}">
+							<td class="align-middle text-center">[[${person.name}]]</td>
+							<td class="align-middle text-center">[[${person.email}]]</td>
+							<td class="align-middle text-center">
+								<th:block th:if="${person.isAdmin}">
+									管理者
+								</th:block>
+								<th:block th:if="${!person.isAdmin}">
+									一般
+								</th:block>
+							</td>
+							<td class="align-middle text-center">[[${person.createdDatetimeFormatted.substring(0,10)}]]
+							</td>
+							<td class="d-flex justify-content-end">
+								<a th:href="'/admin/persons/'+${person.id} + '/edit'" class="btn text-secondary">
+									<i class="bi bi-pencil-fill h5"></i>
+								</a>
+								<form th:action="'/admin/persons/' + ${person.id} + '/delete'" method="post">
+									<button type="button" class="btn text-secondary" data-bs-toggle="modal"
+										th:data-bs-target="'#confirmModal' + ${person.id}">
+										<i class="bi bi-trash-fill h5"></i>
+									</button>
+									<!-- Modal -->
+									<div class="modal fade" th:id="'confirmModal' + ${person.id}" tabindex="-1"
+										aria-labelledby="confirmModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="confirmModalLabel">本当に削除しますか？</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>削除したユーザーは戻せません</p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">キャンセル</button>
+													<button type="submit" class="btn btn-primary">削除</button>
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-						</form>
-					</td>
-				</tr>
-			</table>
+								</form>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
 		</div>
 
 	</main>

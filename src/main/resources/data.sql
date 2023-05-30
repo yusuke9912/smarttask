@@ -1,7 +1,7 @@
-INSERT INTO persons(name,email,password,is_admin) VALUES('山田太郎','yamada@gmail.com','himitu', false);
-INSERT INTO persons(name,email,password,is_admin) VALUES('田中太郎','tanaka@gmail.com','himitu', false);
-INSERT INTO persons(name,email,password,is_admin) VALUES('鈴木一郎','suzuki@gmail.com','himitu', false);
-INSERT INTO persons(name,email,password,is_admin) VALUES('管理者アカウント','admin@gmail.com','himitu', true);
+INSERT INTO persons(name,email,password,is_admin, created_datetime) VALUES('山田太郎','yamada@gmail.com','himitu', false,'2023-03-22 00:00:00');
+INSERT INTO persons(name,email,password,is_admin, created_datetime) VALUES('田中太郎','tanaka@gmail.com','himitu', false,'2023-01-19 00:00:00');
+INSERT INTO persons(name,email,password,is_admin, created_datetime) VALUES('鈴木一郎','suzuki@gmail.com','himitu', false,'2023-03-20 00:00:00');
+INSERT INTO persons(name,email,password,is_admin, created_datetime) VALUES('管理者アカウント','admin@gmail.com','himitu', true,'2023-01-01 00:00:00');
 
 INSERT INTO tags(name) VALUES('仕事');
 INSERT INTO tags(name) VALUES('家庭');

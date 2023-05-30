@@ -10,7 +10,8 @@ id SERIAL PRIMARY KEY,
 name TEXT,
 email TEXT,
 password TEXT,
-is_admin BOOLEAN
+is_admin BOOLEAN,
+created_datetime TIMESTAMP
 );
 
 -- タグテーブル

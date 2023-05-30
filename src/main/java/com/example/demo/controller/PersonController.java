@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -82,27 +80,8 @@ public class PersonController {
 		
 		Person person = personRepository.findById(account.getPersonId()).get();
 
-		List<String> list = taskRepository.getCountByTag(person);
-		Map<String, String> map1 = new HashMap<>();
-		for(String elem : list) {
-			String[] test = elem.split(",");
-			map1.put(test[0], test[1]);
-			
-		}
-		
-		List<String> list2 = taskRepository.getCountByIsCompleted(person);
-		Map<String, String> map2 = new HashMap<>();
-		for(String elem : list2) {
-			String[] test = elem.split(",");
-			map2.put(test[0], test[1]);
-			
-		}
-		
-
 		model.addAttribute("person", person);
-        model.addAttribute("map1",map1);
-        model.addAttribute("map2",map2);
-
+   
 		return "editPerson";
 	}
 
@@ -111,6 +90,7 @@ public class PersonController {
 			@RequestParam(name = "name", defaultValue = "") String name,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
+			@RequestParam(name = "createdDatetime", defaultValue = "") LocalDateTime createdDatetime,
 			Model model) {
 
 		ArrayList<String> errors = new ArrayList<String>();
@@ -133,7 +113,7 @@ public class PersonController {
 		model.addAttribute("errors", errors);
 
 		if (errors.isEmpty()) {
-			Person person = new Person(account.getPersonId(), name, email, password, false);
+			Person person = new Person(account.getPersonId(), name, email, password, false, createdDatetime);
 			personRepository.save(person);
 			return "redirect:/tasks";
 		} else {

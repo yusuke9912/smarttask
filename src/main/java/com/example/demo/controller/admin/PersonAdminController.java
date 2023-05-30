@@ -1,10 +1,13 @@
 package com.example.demo.controller.admin;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,13 +37,19 @@ public class PersonAdminController {
 
 	@GetMapping("/admin/persons")
 	public String persons(
-			@RequestParam(name = "sort", defaultValue = "") String sort,
+			@RequestParam(name = "sort", defaultValue = "id") String sort,
+			@RequestParam(name = "direction", defaultValue = "asc") String direction,
+			Pageable pageable,
 			Model model) {
 
-		List<Person> personList = personRepository.findAllByOrderById();
+		Sort sort1 = direction.equals("asc") ? Sort.by(Sort.Direction.ASC, sort) : Sort.by(Sort.Direction.DESC, sort);
+		Pageable pageable1 = PageRequest.of(pageable.getPageNumber(), 10, sort1);
+		Page<Person> personPage = personRepository.findAll(pageable1);
 
-		model.addAttribute("persons", personList);
+		model.addAttribute("page", personPage);
+		model.addAttribute("persons", personPage.getContent());
 		model.addAttribute("sort", sort);
+		model.addAttribute("direction", direction);
 
 		return "admin/persons";
 	}
@@ -85,10 +94,11 @@ public class PersonAdminController {
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
 			@RequestParam(name = "isAdmin", defaultValue = "") Boolean isAdmin,
+			@RequestParam(name = "createdDatetime", defaultValue = "") LocalDateTime createdDatetime,
 			Pageable pageable,
 			Model model) {
 
-		Person person = new Person(id, name, email, password, isAdmin);
+		Person person = new Person(id, name, email, password, isAdmin, createdDatetime);
 		personRepository.save(person);
 
 		return "redirect:/admin/persons";

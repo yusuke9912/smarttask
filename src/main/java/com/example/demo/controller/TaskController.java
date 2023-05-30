@@ -170,15 +170,16 @@ public class TaskController {
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
 			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
+			@RequestParam(name = "page", defaultValue = "0") Integer page,
 			Pageable pageable,
 			Model model) {
 
 		taskRepository.deleteById(id);
 
 		if (account.getIsAdmin()) {
-			return "redirect:/admin/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
+			return "redirect:/admin/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount + "&page=" + page;
 		} else {
-			return "redirect:/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
+			return "redirect:/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount + "&page=" + page;
 		}
 	}
 
@@ -189,6 +190,7 @@ public class TaskController {
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
 			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
+			@RequestParam(name = "page", defaultValue = "0") Integer page,
 			Pageable pageable,
 			RedirectAttributes redirectAttributes) {
 
@@ -201,9 +203,9 @@ public class TaskController {
 		taskRepository.setIsCompleted(id, true);
 
 		if (account.getIsAdmin()) {
-			return "redirect:/admin/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
+			return "redirect:/admin/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount + "&page=" + page;
 		} else {
-			return "redirect:/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
+			return "redirect:/tasks?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount + "&page=" + page;
 		}
 	}
 
@@ -214,6 +216,7 @@ public class TaskController {
 			@RequestParam(name = "sort", defaultValue = "id") String sort,
 			@RequestParam(name = "direction", defaultValue = "asc") String direction,
 			@RequestParam(name = "maxCount", defaultValue = "10") Integer maxCount,
+			@RequestParam(name = "page", defaultValue = "0") Integer page,
 			Pageable pageable,
 			Model model) {
 
@@ -227,9 +230,9 @@ public class TaskController {
 		taskRepository.setIsCompleted(id, false);
 
 		if (account.getIsAdmin()) {
-			return "redirect:/admin/tasks/completed?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
+			return "redirect:/admin/tasks/completed?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount + "&page=" + page;
 		} else {
-			return "redirect:/tasks/completed?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount;
+			return "redirect:/tasks/completed?sort=" + sort + "&direction=" + direction + "&maxCount=" + maxCount + "&page=" + page;
 		}
 	}
 

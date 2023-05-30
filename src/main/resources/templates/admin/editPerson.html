@@ -10,15 +10,10 @@
 
 <body class="d-flex flex-column h-100">
 	<header th:replace="header"></header>
-	<main class="h-100">
+	<main class="flex-shrink-0">
 		<div class="container">
 			<img src="/image/pika.gif" class="position-absolute" id="pika-img1">
 			<img src="/image/pika.gif" class="position-absolute" id="pika-img2">
-			<div class="row justify-content-center">
-				<div class="col-4 my-3">
-					<canvas id="sushi_circle" width="200" height="500"></canvas>
-				</div>
-			</div>
 			
 			<h3 class="text-center">ユーザー情報変更</h3>
 
@@ -28,6 +23,7 @@
 
 			<form th:action="'/admin/persons/'+${person.id} + '/edit'" method="post" class="needs-validation"
 				novalidate>
+				<input type="hidden" name="createdDatetime" th:value="${person.createdDatetime}">
 				<div class="row justify-content-center">
 					<div class="col-4 my-3">
 						<label class="form-label">氏名</label>
